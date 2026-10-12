@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/Proyecto2Backend">
+    <Resource
+        name="jdbc/ColegioDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+        
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/colegio_db?useSSL=false&amp;serverTimezone=UTC"
+        username="admin_guillermo"
+        password="YKMemo2047**"
+        
+        testWhileIdle="false"
+        testOnBorrow="true"
+        validationQuery="SELECT 1"
+        testOnReturn="false"
+        validationQueryTimeout="30"
+        timeBetweenEvictionRunsMillis="30000"
+        
+        maxTotal="7"
+        initialSize="2"
+        maxWaitMillis="10000"
+        minEvictableIdleTimeMillis="30000"
+        minIdle="2"
+        
+        removeAbandonedTimeout="60"
+        logAbandoned="true"
+        removeAbandonedOnBorrow="true"
+    />
+</Context>
