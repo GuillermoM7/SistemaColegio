@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 
 public final class DBConnectionSingleton {
 
-    // Apuntamos al nombre que definiste en tu context.xml
     private static final String JNDI_NAME = "java:comp/env/jdbc/ColegioDB";
 
     private static DBConnectionSingleton instance;

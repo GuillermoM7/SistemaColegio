@@ -8,7 +8,7 @@ import org.glassfish.jersey.server.ServerProperties;
 public class JakartaRestConfiguration extends ResourceConfig {
 
     public JakartaRestConfiguration() {
-        packages("com.cunoc.colegio.resources")
+        packages("com.cunoc.colegio.apirestapp.recursos")
                 .property(ServerProperties.RESPONSE_SET_STATUS_OVER_SEND_ERROR, true);
     }
 }
