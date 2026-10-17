@@ -1,35 +1,40 @@
 package com.cunoc.colegio.apirestapp.dto;
 
-
 public class RespuestaLoginDTO {
     
-    private String username;
-    private int idRol;
+    private String token;
+    private String nombre;
 
     public RespuestaLoginDTO() {
     }
 
-    public RespuestaLoginDTO(String username, int idRol) {
-        this.username = username;
-        this.idRol = idRol;
+    public RespuestaLoginDTO(String token, String nombre) {
+        this.token = token;
+        this.nombre = nombre;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String usarname) {
-        this.username = usarname;
-    }
-
-    public int getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
-    }
     
     
+    public RespuestaLoginDTO(String token) {
+        this.token = token;
+    }
+
+    
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombres) {
+        this.nombre = nombres;
+    }
+         
     
 }

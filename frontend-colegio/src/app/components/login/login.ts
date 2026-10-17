@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  username = '';
+  correo = '';
   password = '';
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -20,7 +20,7 @@ export class LoginComponent {
 
   ejecutarLogin() {
 
-    this.authService.login(this.username, this.password).subscribe({
+    this.authService.login(this.correo, this.password).subscribe({
       next: (respuestaBackend) => {
         localStorage.setItem('usuarioLogueado', JSON.stringify(respuestaBackend))
         this.router.navigate(['/pantalla-principal']);

@@ -3,7 +3,7 @@ package com.cunoc.colegio.database.entidades;
 public class Usuario {
 
     private int idUsuario;
-    private String username;
+    private String correo;
     private String contrasena;
     private int idRol;
     private boolean activo; 
@@ -13,14 +13,15 @@ public class Usuario {
     }
 
 
-    public Usuario(int idUsuario, String username, String password, int idRol, boolean activo) {
+    public Usuario(int idUsuario, String correo, String contrasena, int idRol, boolean activo) {
         this.idUsuario = idUsuario;
-        this.username = username;
-        this.contrasena = password;
+        this.correo = correo;
+        this.contrasena = contrasena;
         this.idRol = idRol;
         this.activo = activo;
     }
 
+    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -29,20 +30,20 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getUsername() {
-        return username;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getPassword() {
+    public String getContrasena() {
         return contrasena;
     }
 
-    public void setPassword(String password) {
-        this.contrasena = password;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public int getIdRol() {
@@ -60,4 +61,6 @@ public class Usuario {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    
 }

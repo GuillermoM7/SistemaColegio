@@ -2,6 +2,8 @@ C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\ma
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\RespuestaLoginDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\JakartaRestConfiguration.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\Autenticacion.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\EmpleadoDAO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\EstudianteDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\UsuarioDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\DBConnectionSingleton.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\entidades\AsignacionMaestro.java

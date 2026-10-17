@@ -1,19 +1,19 @@
 package com.cunoc.colegio.apirestapp.dto;
 
 public class CredencialesDTO {
-    private String username;
+    private String correo;
     private String password; 
 
     
     public CredencialesDTO() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getPassword() {

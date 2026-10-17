@@ -1,5 +1,6 @@
 com\cunoc\colegio\database\entidades\Seccion.class
 com\cunoc\colegio\database\entidades\Estudiante.class
+com\cunoc\colegio\database\daos\EstudianteDAO.class
 com\cunoc\colegio\database\DBConnectionSingleton.class
 com\cunoc\colegio\database\entidades\EstadoMulta.class
 com\cunoc\colegio\database\entidades\Carrera.class
@@ -16,6 +17,7 @@ com\cunoc\colegio\database\entidades\Curriculo.class
 com\cunoc\colegio\database\entidades\Estado.class
 com\cunoc\colegio\apirestapp\dto\RespuestaLoginDTO.class
 com\cunoc\colegio\apirestapp\recursos\Autenticacion.class
+com\cunoc\colegio\database\daos\EmpleadoDAO.class
 com\cunoc\colegio\database\entidades\Libro.class
 com\cunoc\colegio\database\entidades\Nivel.class
 com\cunoc\colegio\database\entidades\Prestamo.class
