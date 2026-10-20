@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-pantalla-principal',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, RouterLink, CommonModule],
   templateUrl: './pantalla-principal.html',
   styleUrl: './pantalla-principal.css'
 })

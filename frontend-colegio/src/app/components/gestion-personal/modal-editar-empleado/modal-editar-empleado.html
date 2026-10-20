@@ -1,0 +1,66 @@
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.6); position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1050; overflow-y: auto;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-3">
+            
+            <!-- Encabezado -->
+            <div class="modal-header text-white border-0" style="background-color: #2c3e50 !important;">
+                <h5 class="modal-title fw-bold m-0 d-flex align-items-center">
+                    <i class="fas fa-user-edit me-2"></i>Modificar Empleado
+                </h5>
+                <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()" aria-label="Close"></button>
+            </div>
+
+            <!-- Formulario -->
+            <div class="modal-body p-4">
+                <div class="row g-3">
+                    
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nombres</label>
+                        <input type="text" class="form-control" [(ngModel)]="empleadoEditado.nombre">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Apellidos</label>
+                        <input type="text" class="form-control" [(ngModel)]="empleadoEditado.apellidos">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Puesto</label>
+                        <input type="text" class="form-control" [(ngModel)]="empleadoEditado.puesto">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nivel de acceso</label>
+                        <select class="form-select" [(ngModel)]="empleadoEditado.idRol">
+                            <option [ngValue]="1">Super Admin</option>
+                            <option [ngValue]="2">Administrador</option>
+                        </select>
+                    </div>
+
+                    <!-- Filtro salario -->
+                    <div class="col-md-12 mt-4">
+                        <label class="form-label fw-bold color-texto-oscuro">Salario Mensual (GTQ)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Q</span>
+                            <input type="number" class="form-control form-control-lg" 
+                                [(ngModel)]="empleadoEditado.salario" 
+                                [class.is-invalid]="errorSueldo" min="1">
+                        </div>
+                        <div class="text-danger mt-1 small fw-semibold" *ngIf="errorSueldo">
+                            <i class="fas fa-exclamation-triangle me-1"></i> El salario debe ser mayor a 0.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer bg-light border-0">
+                <button type="button" class="btn btn-outline-secondary fw-bold" (click)="cerrarModal()">Cancelar</button>
+                <button type="button" class="btn btn-primary fw-bold px-4" (click)="guardarCambios()">
+                    <i class="fas fa-save me-2"></i>Guardar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

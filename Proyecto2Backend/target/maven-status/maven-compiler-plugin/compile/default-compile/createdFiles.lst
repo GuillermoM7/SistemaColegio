@@ -2,13 +2,17 @@ com\cunoc\colegio\database\entidades\Seccion.class
 com\cunoc\colegio\database\entidades\Estudiante.class
 com\cunoc\colegio\database\daos\EstudianteDAO.class
 com\cunoc\colegio\database\DBConnectionSingleton.class
+com\cunoc\colegio\apirestapp\dto\RegistroEmpleadoDTO.class
 com\cunoc\colegio\database\entidades\EstadoMulta.class
 com\cunoc\colegio\database\entidades\Carrera.class
 com\cunoc\colegio\apirestapp\dto\CredencialesDTO.class
+com\cunoc\colegio\apirestapp\dto\ListadoEmpleadoDTO.class
 com\cunoc\colegio\database\entidades\Multa.class
 com\cunoc\colegio\apirestapp\JakartaRestConfiguration.class
+com\cunoc\colegio\apirestapp\dto\PaginaEmpleadosDTO.class
 com\cunoc\colegio\database\entidades\CurriculoCurso.class
 com\cunoc\colegio\database\entidades\Empleado.class
+com\cunoc\colegio\apirestapp\recursos\GestionPersonal.class
 com\cunoc\colegio\database\entidades\Nota.class
 com\cunoc\colegio\database\entidades\Grado.class
 com\cunoc\colegio\database\entidades\Rol.class

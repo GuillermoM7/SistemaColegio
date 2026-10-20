@@ -1,0 +1,83 @@
+<div class="card shadow-sm border-0 animate-fade-in">
+
+    <div class="card-header bg-pizarra text-white d-flex align-items-center py-3">
+        <i class="fas fa-user-shield fs-4 me-3 text-esmeralda"></i>
+        <h5 class="m-0 fw-bold">Registro de Personal Administrativo</h5>
+    </div>
+
+    <div class="card-body p-4 bg-gris-claro">
+
+    <div class="alert alert-danger fw-bold d-flex align-items-center" *ngIf="mensajeError">
+        <i class="fas fa-exclamation-triangle me-2 fs-5"></i> {{ mensajeError }}
+    </div>
+
+    <form (ngSubmit)="registrar()">
+        <div class="row">
+        
+        <!-- datos de la cuenta -->
+        <div class="col-md-6 mb-4">
+            <h6 class="text-secondary border-bottom pb-2 mb-3">Datos de Acceso</h6>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Correo Electrónico *</label>
+                <input type="email" class="form-control" name="correo" [(ngModel)]="nuevoEmpleado.correo" required placeholder="ejemplo@colegio.com">
+            </div>
+        
+            <div class="mb-3">
+            <label class="form-label fw-semibold">Contraseña Provisional *</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="nuevoEmpleado.password" required>
+            </div>
+
+            <div class="mb-3">
+            <label class="form-label fw-semibold">Nivel de Acceso (Rol) *</label>
+            <select class="form-select" name="idRol" [(ngModel)]="nuevoEmpleado.idRol">
+                <option [value]="0" disabled selected>-- Seleccione un Rol --</option>
+                <option [value]="1">Superintendente (Super Admin)</option>
+                <option [value]="2">Director</option>
+            </select>
+            </div>
+        </div>
+
+        <!-- Datos personales -->
+        <div class="col-md-6 mb-4">
+            <h6 class="text-secondary border-bottom pb-2 mb-3">Información del Empleado</h6>
+        
+            <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label fw-semibold">Nombres *</label>
+                <input type="text" class="form-control" name="nombres" [(ngModel)]="nuevoEmpleado.nombres" required>
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label fw-semibold">Apellidos *</label>
+                <input type="text" class="form-control" name="apellidos" [(ngModel)]="nuevoEmpleado.apellidos" required>
+            </div>
+            </div>
+
+            <div class="mb-3">
+            <label class="form-label fw-semibold">Puesto / Cargo</label>
+            <input type="text" class="form-control" name="puesto" [(ngModel)]="nuevoEmpleado.puesto" placeholder="Ej. Director Académico">
+            </div>
+
+            <div class="row">
+            <div class="col-6 mb-3">
+                <label class="form-label fw-semibold">Fecha Contratación</label>
+                <input type="date" class="form-control" name="fechaContratacion" [(ngModel)]="nuevoEmpleado.fechaContratacion">
+            </div>
+            <div class="col-6 mb-3">
+                <label class="form-label fw-semibold">Salario Inicial (Q)</label>
+                <input type="number" step="0.01" class="form-control" name="salario" [(ngModel)]="nuevoEmpleado.salario" placeholder="0.00">
+            </div>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="d-flex justify-content-end mt-3 border-top pt-3">
+        <button type="button" class="btn btn-outline-secondary me-2" (click)="cancelar()">Cancelar</button>
+        <button type="submit" class="btn btn-esmeralda fw-bold px-4">
+            <i class="fas fa-save me-1"></i> Guardar Empleado
+        </button>
+        </div>
+
+    </form>
+    </div>
+</div>

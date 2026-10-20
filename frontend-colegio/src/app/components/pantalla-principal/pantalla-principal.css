@@ -1,0 +1,58 @@
+.encabezado-superior {
+    background: linear-gradient(to right, #f8fafc, #e2e8f0);
+    border-bottom: 1px solid #cbd5e1;
+}
+
+/* Titulo */
+.color-texto-oscuro {
+    color: #1e293b; 
+}
+
+/* Icono Usuario */
+.color-acento {
+    color: #098aaa;
+}
+
+/* Barra */
+.barra-colegio {
+    background: linear-gradient(135deg, #3b4b91 0%, #5587a7 100%);
+    border-bottom: 4px solid #ffc23d; 
+}
+
+/* Botones */
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    margin-right: 8px; /* Separación entre botones */
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #09d491 !important; /* color texto al pasar */
+    background-color: rgba(255, 255, 255, 0.05); /* Brillo fuente  */
+    transform: translateY(-2px);
+}
+
+/* Botón salir */
+.navbar-nav .btn-salir {
+    color: #ef9f44ce !important;
+    font-weight: 600;
+}
+
+.navbar-nav .btn-salir:hover {
+    color: #b1632f !important;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Contenedores */
+:host {
+    display: block;
+    background-color: #f1f5f9; 
+    min-height: 100vh;
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}

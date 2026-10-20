@@ -1,42 +1,99 @@
+<header class="encabezado-superior shadow-sm py-2 px-4 d-flex justify-content-between align-items-center">
+  
+  <div class="d-flex align-items-center">
+    <!-- Agregar foto -->
+    <img src="assets/logo.png" alt="Logo Colegio" width="50" height="50" class="rounded-circle shadow-sm border me-3">
+    <h3 class="m-0 fw-bold color-texto-oscuro" style="letter-spacing: 1px; font-size: 1.4rem;">SISTEMA ESCOLAR | COLEGIO MORON</h3>
+  </div>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-  <div class="container-fluid">
+
+  <div class="d-flex align-items-center text-dark">
+    <span class="fw-semibold text-uppercase me-2" style="font-size: 0.85rem;">{{ nombreUsuario }}</span>
+    <i class="fas fa-user-circle fs-4 color-acento"></i>
+  </div>
+
+</header>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark barra-colegio shadow-lg sticky-top">
+  <div class="container-fluid px-4">
     
-    <a class="navbar-brand" href="#">
-      <i class="fas fa-graduation-cap me-2 text-warning"></i> Sistema Colegio
-    </a>
-
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    
     <div class="collapse navbar-collapse" id="menuNavegacion">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
         <li class="nav-item">
-          <a class="nav-link active" href="#"><i class="fas fa-home"></i> Inicio</a>
+          <a class="nav-link" routerLink="./mi-perfil">
+            <i class="fas fa-book me-1"></i> Inicio
+          </a>
         </li>
-        
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="./mi-perfil">
+            <i class="fas fa-user-circle me-1"></i> Mi perfil
+          </a>
+        </li>
+        <!-- SuperIntendente -->
+        <li class="nav-item" *ngIf="idRolUsuario === 1">
+          <a class="nav-link" routerLink="./gestion-empleados">
+            <i class="fas fa-users-cog me-1"></i> Gestión Personal Administrativo
+          </a>
+        </li>
+
+        <!-- Director -->
+        <li class="nav-item" *ngIf="idRolUsuario === 2">
+          <a class="nav-link" routerLink="./matriculas">
+            <i class="fas fa-address-book me-1"></i> Gestion Empleados
+          </a>
+        </li>
+
+        <!-- Secretaria -->
+        <li class="nav-item" *ngIf="idRolUsuario === 3">
+          <a class="nav-link" routerLink="./mis-cursos">
+            <i class="fas fa-chalkboard-teacher me-1"></i> Inscripcion
+          </a>
+        </li>
+
+        <!-- Maestro -->
+        <li class="nav-item" *ngIf="idRolUsuario === 4">
+          <a class="nav-link" routerLink="./mis-notas">
+            <i class="fas fa-book-reader me-1"></i> Mi aula
+          </a>
+        </li>
+
+        <!-- Estudiante -->
+        <li class="nav-item" *ngIf="idRolUsuario === 5 || idRolUsuario === 4 ">
+          <a class="nav-link" routerLink="./biblioteca">
+            <i class="fas fa-book me-1"></i> Biblioteca
+          </a>
+        </li>
+
+        <!-- Bibliotecario -->
+        <li class="nav-item" *ngIf="idRolUsuario === 6 ">
+          <a class="nav-link" routerLink="./biblioteca">
+            <i class="fas fa-book me-1"></i> Gestion de biblioteca
+          </a>
+        </li>
+
+        <li class="nav-item ms-lg-2 mt-2 mt-lg-0" style="cursor: pointer;">
+          <a class="nav-link btn-salir" (click)="cerrarSesion()">
+            <i class="fas fa-sign-out-alt me-1"></i> Salir
+          </a>
+        </li>
+
       </ul>
-
-      <div class="d-flex align-items-center">
-        <span class="text-light me-4">
-          <i class="fas fa-user-circle fs-5 me-1"></i> Hola, <strong>{{ nombreUsuario }}</strong>
-        </span>
-        
-        <button class="btn btn-outline-danger btn-sm" (click)="cerrarSesion()">
-          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </button>
-      </div>
     </div>
-
+    
   </div>
 </nav>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col">
-      <h2>Bienvenido al panel principal</h2>
-      <p class="text-muted">Selecciona una opción del menú superior para comenzar a administrar el sistema.</p>
-    </div>
+<!-- Contenedor -->
+<div class="container-fluid mt-4">
+  <div class="p-4 bg-white rounded shadow-sm min-vh-75">
+    <router-outlet></router-outlet>
   </div>
 </div>

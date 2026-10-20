@@ -1,0 +1,101 @@
+<div class="container-fluid animate-fade-in py-3">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <h3 class="fw-bold color-texto-oscuro mb-0">Gestión de Personal Administrativo</h3>
+        <button class="btn btn-esmeralda fw-bold shadow-sm" (click)="abrirFormulario()" *ngIf="!mostrarFormulario">
+            <i class="fas fa-user-plus me-2"></i> Registrar Nuevo Empleado
+        </button>
+    </div>
+
+    <div class="alert alert-success fw-bold d-flex align-items-center" *ngIf="mensajeExitoPadre">
+        <i class="fas fa-check-circle me-2 fs-5"></i> {{ mensajeExitoPadre }}
+    </div>
+
+    <!-- Tabla -->
+    <div class="card shadow-sm border-0 rounded-3" *ngIf="!mostrarFormulario">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-pizarra text-white">
+                        <tr>
+                            <th scope="col" class="py-3 px-4 rounded-start">Nombres y Apellidos</th>
+                            <th scope="col" class="py-3">Correo</th>
+                            <th scope="col" class="py-3">Puesto</th>
+                            <th scope="col" class="py-3">Sueldo</th>
+                            <th scope="col" class="py-3">Fecha Contratacion</th>
+                            <th scope="col" class="py-3">Nivel de acceso</th>
+                            <th scope="col" class="py-3 text-center">Estado</th>
+                            <th scope="col" class="py-3 text-center rounded-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empleado of listaEmpleados">
+                            <td class="px-4 fw-semibold">{{ empleado.nombre }} {{ empleado.apellidos }}</td>
+                            <td class="text-secondary">{{ empleado.correo }}</td>
+                            <td>{{ empleado.puesto || 'Sin asignar' }}</td>
+                            <td class="fw-bold text-success">{{ empleado.salario | currency:'GTQ':'symbol' }}</td>  
+                            <td>{{ empleado.fechaContratacion || 'No registrada' }}</td> 
+                            <td>
+                                <span class="badge rounded-pill" 
+                                    [ngClass]="{'bg-dark': empleado.idRol === 1, 'bg-primary': empleado.idRol === 2}">
+                                    {{ empleado.idRol === 1 ? 'Superadmin' : 'Admin' }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge rounded-pill" 
+                                    [ngClass]="empleado.estado ? 'bg-success' : 'bg-secondary'">
+                                    {{ empleado.estado ? 'Activo' : 'Inactivo' }}
+                                </span>
+                            </td>
+
+                            <!-- Acciones -->
+                            <td class="text-center">
+                                <div class="btn-group shadow-sm" role="group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="Modificar"(click)="abrirModalEdicion(empleado)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-sm" 
+                                        [ngClass]="empleado.estado ? 'btn-outline-danger' : 'btn-outline-success'" 
+                                        [title]="empleado.estado ? 'Desactivar' : 'Activar'"
+                                        (click)="cambiarEstado(empleado)">
+                                        <i class="fas" [ngClass]="empleado.estado ? 'fa-ban' : 'fa-check-circle'"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="listaEmpleados.length === 0">
+                            <td colspan="8" class="text-center py-4 text-muted">
+                                Cargando información o no hay empleados registrados en el sistema.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        
+        <app-paginacion 
+            [paginaActual]="paginaActual" 
+            [totalPaginas]="totalPaginas" 
+            [totalRegistros]="totalRegistros"
+            (cambioPagina)="manejarCambioPagina($event)">
+        </app-paginacion>
+    </div>
+
+    <app-formulario-empleado 
+        *ngIf="mostrarFormulario" 
+        (onCancelar)="cerrarFormulario()" 
+        (onGuardadoExito)="manejarGuardadoExitoso($event)">
+    </app-formulario-empleado>
+
+</div>
+
+    <app-modal-editar-empleado 
+        *ngIf="mostrarModalEdicion"
+        [empleadoOriginal]="empleadoSeleccionadoParaEditar"
+        (onCerrar)="cerrarModalEdicion()"
+        (onGuardar)="guardarEdicionEmpleado($event)">
+    </app-modal-editar-empleado>

@@ -1,7 +1,11 @@
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CredencialesDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\ListadoEmpleadoDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\PaginaEmpleadosDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\RegistroEmpleadoDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\RespuestaLoginDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\JakartaRestConfiguration.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\Autenticacion.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\GestionPersonal.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\EmpleadoDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\EstudianteDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\UsuarioDAO.java
