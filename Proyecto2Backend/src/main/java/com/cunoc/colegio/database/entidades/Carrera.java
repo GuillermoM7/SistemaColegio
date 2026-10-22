@@ -4,17 +4,17 @@ public class Carrera {
     
     private int idCarrera;
     private String nombre;
-    private boolean estado;
+    private boolean activa;
 
     
     public Carrera() {
     }
 
     
-    public Carrera(int idCarrera, String nombre, boolean estado) {
+    public Carrera(int idCarrera, String nombre, boolean activa) {
         this.idCarrera = idCarrera;
         this.nombre = nombre;
-        this.estado = estado;
+        this.activa = activa;
     }
 
     
@@ -34,13 +34,13 @@ public class Carrera {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isActiva() {
+        return activa;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setActiva(boolean activa) {
+        this.activa = activa;
     }
-    
-      
+
+        
 }

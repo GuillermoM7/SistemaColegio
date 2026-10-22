@@ -1,0 +1,84 @@
+<div class="card border-0 shadow-sm mt-3">
+    <div class="card-body p-4">
+        <h5 class="fw-bold mb-4"><i class="fas fa-filter me-2 text-primary"></i>Filtro por Niveles Académicos</h5>
+        
+        <!-- Botones de Filtro -->
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            <button *ngFor="let nivel of niveles" 
+                    class="btn rounded-pill px-4 fw-bold transition-all"
+                    [ngClass]="nivelSeleccionado === nivel.idNivel ? 'btn-primary shadow-sm' : 'btn-outline-secondary'"
+                    (click)="seleccionarNivel(nivel.idNivel)">
+                {{ nivel.nombre }}
+            </button>
+        </div>
+
+        <hr class="text-muted mb-4">
+
+        <!-- Alertas -->
+        <div *ngIf="mensajeExito" class="alert alert-success alert-dismissible fade show py-2" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ mensajeExito }}
+            <button type="button" class="btn-close py-2" (click)="mensajeExito = ''"></button>
+        </div>
+        <div *ngIf="mensajeError" class="alert alert-danger alert-dismissible fade show py-2" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>{{ mensajeError }}
+            <button type="button" class="btn-close py-2" (click)="mensajeError = ''"></button>
+        </div>
+
+        <!-- Formulario de Nuevo Grado -->
+        <form (ngSubmit)="guardarGrado()" class="row gx-2 mb-4 align-items-center">
+            <div [ngClass]="esDiversificado ? 'col-md-5' : 'col-md-9'">
+                <input type="text" class="form-control bg-light" placeholder="Nuevo grado (Ej. Cuarto, Quinto...)" 
+                    name="nombreGrado" [(ngModel)]="nuevoGrado.nombre" required>
+            </div>
+
+            <!-- Seleccion de carreras -->
+            <div *ngIf="esDiversificado" class="col-md-4">
+                <select class="form-select bg-light" name="idCarrera" [(ngModel)]="nuevoGrado.idCarrera" required>
+                    <option [ngValue]="undefined" disabled selected>-- Seleccione una Carrera --</option>
+                    <option *ngFor="let carrera of carrerasActivas" [value]="carrera.idCarrera">
+                        {{ carrera.nombre }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Botón Guardar -->
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-outline-primary w-100 fw-bold" 
+                        [disabled]="!nuevoGrado.nombre || (esDiversificado && !nuevoGrado.idCarrera)">
+                    <i class="fas fa-plus me-1"></i>Agregar Grado
+                </button>
+            </div>
+            
+        </form>
+
+        <!-- Tabla de Grados -->
+        <h6 class="fw-bold text-secondary mb-3">Grados Registrados en este Nivel</h6>
+        <div class="table-responsive">
+                        <table class="table table-hover align-middle border">
+                <thead class="table-light text-secondary">
+                    <tr>
+                        <th class="ps-4">ID GRADO</th>
+                        <th>NOMBRE DEL GRADO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="gradosFiltrados.length === 0">
+                        <td colspan="2" class="text-center py-4 text-muted">
+                            <i class="fas fa-folder-open me-2"></i>No hay grados registrados para este nivel.
+                        </td>
+                    </tr>
+                    <tr *ngFor="let grado of gradosFiltrados">
+                        <td class="ps-4 fw-bold text-dark"># {{ grado.idGrado }}</td>
+                        <td>
+                            {{ grado.nombre }}
+                            <span *ngIf="grado.nombreCarrera" class="badge bg-info text-dark ms-2 fw-semibold shadow-sm">
+                                <i class="fas fa-graduation-cap me-1"></i>{{ grado.nombreCarrera }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>

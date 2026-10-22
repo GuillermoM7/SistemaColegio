@@ -35,7 +35,6 @@ export class GestionPersonal implements OnInit {
   cargarPagina() {
     this.gestionService.listarEmpleados(this.paginaActual, 5).subscribe({
       next: (respuesta) => {
-        console.log("Datos crudos:", JSON.stringify(respuesta));
         this.listaEmpleados = respuesta.empleados || [];
         this.totalRegistros = respuesta.totalRegistros || 0;
         this.totalPaginas = respuesta.totalPaginas || 0;

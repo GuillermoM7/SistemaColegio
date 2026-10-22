@@ -4,28 +4,28 @@ public class Grado {
     
     private int idGrado;
     private String nombre;
-    private int nivel;
-    private int carrera;
+    private Integer idNivel;
+    private Integer idCarrera;
 
     
     public Grado() {
     }
 
     
-    public Grado(int idgrado, String nombre, int nivel, int carrera) {
-        this.idGrado = idgrado;
+    public Grado(int idGrado, String nombre, Integer idNivel, Integer idCarrera) {
+        this.idGrado = idGrado;
         this.nombre = nombre;
-        this.nivel = nivel;
-        this.carrera = carrera;
+        this.idNivel = idNivel;
+        this.idCarrera = idCarrera;
     }
 
     
-    public int getIdgrado() {
+    public int getIdGrado() {
         return idGrado;
     }
 
-    public void setIdgrado(int idgrado) {
-        this.idGrado = idgrado;
+    public void setIdGrado(int idGrado) {
+        this.idGrado = idGrado;
     }
 
     public String getNombre() {
@@ -36,21 +36,21 @@ public class Grado {
         this.nombre = nombre;
     }
 
-    public int getNivel() {
-        return nivel;
+    public Integer getIdNivel() {
+        return idNivel;
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public void setIdNivel(Integer idNivel) {
+        this.idNivel = idNivel;
     }
 
-    public int getCarrera() {
-        return carrera;
+    public Integer getIdCarrera() {
+        return idCarrera;
     }
 
-    public void setCarrera(int carrera) {
-        this.carrera = carrera;
+    public void setIdCarrera(Integer idCarrera) {
+        this.idCarrera = idCarrera;
     }
-    
+
     
 }

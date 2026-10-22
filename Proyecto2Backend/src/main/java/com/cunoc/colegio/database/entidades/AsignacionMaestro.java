@@ -6,19 +6,18 @@ public class AsignacionMaestro {
     private int idEmpleado;
     private int idCurso;
     private int idSeccion;
-    private int cicloEscolar;
+    private int idAnioLectivo;
 
     
     public AsignacionMaestro() {
     }
 
-    
-    public AsignacionMaestro(int idAsignacion, int idEmpleado, int idCurso, int idSeccion, int cicloEscolar) {
+    public AsignacionMaestro(int idAsignacion, int idEmpleado, int idCurso, int idSeccion, int idAnioLectivo) {
         this.idAsignacion = idAsignacion;
         this.idEmpleado = idEmpleado;
         this.idCurso = idCurso;
         this.idSeccion = idSeccion;
-        this.cicloEscolar = cicloEscolar;
+        this.idAnioLectivo = idAnioLectivo;
     }
 
     
@@ -54,13 +53,13 @@ public class AsignacionMaestro {
         this.idSeccion = idSeccion;
     }
 
-    public int getCicloEscolar() {
-        return cicloEscolar;
+    public int getIdAnioLectivo() {
+        return idAnioLectivo;
     }
 
-    public void setCicloEscolar(int cicloEscolar) {
-        this.cicloEscolar = cicloEscolar;
+    public void setIdAnioLectivo(int idAnioLectivo) {
+        this.idAnioLectivo = idAnioLectivo;
     }
-    
+
       
 }

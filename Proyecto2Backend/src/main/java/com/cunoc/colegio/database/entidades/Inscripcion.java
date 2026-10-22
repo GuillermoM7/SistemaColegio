@@ -8,21 +8,21 @@ public class Inscripcion {
     private int idEstudiante;
     private int idGrado;
     private int idSeccion;
-    private int cicloEscolar;
     private LocalDate fechaInscripcion;
+    private int idAnioLectivo;
 
     
     public Inscripcion() {
     }
 
     
-    public Inscripcion(int idInscripcion, int idEstudiante, int idGrado, int idSeccion, int cicloEscolar, LocalDate fechaInscripcion) {
+    public Inscripcion(int idInscripcion, int idEstudiante, int idGrado, int idSeccion, LocalDate fechaInscripcion, int idAnioLectivo) {
         this.idInscripcion = idInscripcion;
         this.idEstudiante = idEstudiante;
         this.idGrado = idGrado;
         this.idSeccion = idSeccion;
-        this.cicloEscolar = cicloEscolar;
         this.fechaInscripcion = fechaInscripcion;
+        this.idAnioLectivo = idAnioLectivo;
     }
 
     
@@ -58,14 +58,6 @@ public class Inscripcion {
         this.idSeccion = idSeccion;
     }
 
-    public int getCicloEscolar() {
-        return cicloEscolar;
-    }
-
-    public void setCicloEscolar(int cicloEscolar) {
-        this.cicloEscolar = cicloEscolar;
-    }
-
     public LocalDate getFechaInscripcion() {
         return fechaInscripcion;
     }
@@ -73,6 +65,14 @@ public class Inscripcion {
     public void setFechaInscripcion(LocalDate fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
+
+    public int getIdAnioLectivo() {
+        return idAnioLectivo;
+    }
+
+    public void setIdAnioLectivo(int idAnioLectivo) {
+        this.idAnioLectivo = idAnioLectivo;
+    }
+
     
-        
 }

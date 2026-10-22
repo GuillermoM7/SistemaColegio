@@ -4,17 +4,16 @@ public class Curriculo {
     
     private int idCurriculo;
     private int idGrado;
-    private int cicloEscolar;
+    private int idAnioLectivo;
 
         
     public Curriculo() {
     }
 
-    
-    public Curriculo(int idCurriculo, int idGrado, int cicloEscolar) {
+    public Curriculo(int idCurriculo, int idGrado, int idAnioLectivo) {
         this.idCurriculo = idCurriculo;
         this.idGrado = idGrado;
-        this.cicloEscolar = cicloEscolar;
+        this.idAnioLectivo = idAnioLectivo;
     }
 
     
@@ -34,13 +33,13 @@ public class Curriculo {
         this.idGrado = idGrado;
     }
 
-    public int getCicloEscolar() {
-        return cicloEscolar;
+    public int getIdAnioLectivo() {
+        return idAnioLectivo;
     }
 
-    public void setCicloEscolar(int cicloEscolar) {
-        this.cicloEscolar = cicloEscolar;
+    public void setIdAnioLectivo(int idAnioLectivo) {
+        this.idAnioLectivo = idAnioLectivo;
     }
-        
-        
+
+     
 }
