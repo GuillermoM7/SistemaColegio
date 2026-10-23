@@ -1,0 +1,81 @@
+
+.card {
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+
+.btn-esmeralda {
+    background-color: #80dfa7; 
+    color: white;
+    border: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-esmeralda:hover {
+    background-color: #7de4ad;
+    color: white;
+}
+
+.btn-outline-primary {
+    color: #4299e1;
+    border-color: #4299e1;
+}
+
+.btn-outline-danger {
+    color: #e53e3e;
+    border-color: #e53e3e;
+}
+
+
+.text-esmeralda {
+    color: #68e79d; 
+}
+
+.form-label {
+    font-size: 0.9rem;
+    color: #4a5568; 
+    font-weight: 600;
+}
+
+.section-title {
+    font-size: 0.95rem;
+    color: #718096;
+    font-weight: bold;
+}
+
+/*  Inputs  */
+.form-control, .form-select {
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #54d88b;
+    box-shadow: 0 0 0 0.2rem rgba(72, 187, 120, 0.25);
+}
+
+/*  Tabla  */
+.table thead th {
+    font-weight: bold;
+    color: #1a202c;
+    border-bottom: 3px solid #53d88a; 
+}
+
+.table tbody td {
+    color: #4a5568;
+    vertical-align: middle;
+    border-bottom: 1px solid #edf2f7;
+}
+
+/* --- Encabezado del Formulario --- */
+.header-oscuro {
+    background-color: #1a202c; 
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 4px solid #48bb78;
+}

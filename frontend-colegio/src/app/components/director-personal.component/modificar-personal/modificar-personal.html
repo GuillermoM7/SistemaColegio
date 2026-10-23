@@ -1,0 +1,44 @@
+<div class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold"><i class="fas fa-user-edit me-2"></i>Modificar Empleado</h5>
+                <button type="button" class="btn-close btn-close-white" (click)="onCancelar.emit()"></button>
+            </div>
+            
+            <div class="modal-body p-4">
+                <div *ngIf="mensajeError" class="alert alert-danger">{{ mensajeError }}</div>
+                
+                <form (ngSubmit)="guardar()">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold">Nombres</label>
+                            <input type="text" class="form-control" name="nombres" [(ngModel)]="empleadoEditando.nombre" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold">Apellidos</label>
+                            <input type="text" class="form-control" name="apellidos" [(ngModel)]="empleadoEditando.apellidos" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-muted">Puesto (Solo lectura)</label>
+                            <input type="text" class="form-control bg-light" name="puesto" [(ngModel)]="empleadoEditando.puesto" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Salario Mensual (GTQ)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white fw-bold">Q</span>
+                            <input type="number" min="0" class="form-control fs-5" name="salario" [(ngModel)]="empleadoEditando.salario" required>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light border me-2" (click)="onCancelar.emit()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

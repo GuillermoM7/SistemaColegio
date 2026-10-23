@@ -1,5 +1,7 @@
 package com.cunoc.colegio.database.daos;
 
+import com.cunoc.colegio.apirestapp.dto.ListadoAlumnoDTO;
+import com.cunoc.colegio.apirestapp.dto.PaginaAlumnosDTO;
 import com.cunoc.colegio.database.DBConnectionSingleton;
 import com.cunoc.colegio.database.entidades.Estado;
 import com.cunoc.colegio.database.entidades.Estudiante;
@@ -7,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstudianteDAO {
 
@@ -43,5 +47,88 @@ public class EstudianteDAO {
         }
         
         return estudiante;
+    }
+    
+    
+    public List<Estudiante> obtenerAlumnosSinUsuario() {
+        List<Estudiante> lista = new ArrayList<>();
+        String sql = "SELECT id_estudiante, nombres, apellidos FROM estudiante WHERE id_usuario IS NULL AND estado = 'Activo'";
+        
+        try (Connection conexion = DBConnectionSingleton.getInstance().getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+             
+            while (rs.next()) {
+                Estudiante est = new Estudiante();
+                est.setIdEstudiante(rs.getInt("id_estudiante"));
+                est.setNombres(rs.getString("nombres"));
+                est.setApellidos(rs.getString("apellidos"));
+                lista.add(est);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar huérfanos: " + e.getMessage());
+        }
+        return lista;
+    }
+    
+    
+    public PaginaAlumnosDTO obtenerAlumnosConUsuarioPaginado(int pagina, int limite) {
+        PaginaAlumnosDTO respuesta = new PaginaAlumnosDTO();
+        List<ListadoAlumnoDTO> lista = new ArrayList<>();
+        
+        String sqlCount = "SELECT COUNT(*) FROM estudiante WHERE id_usuario IS NOT NULL";
+        
+        String sqlData = 
+            "SELECT u.id_usuario, u.correo, u.activo AS estado_usuario, " +
+            "e.id_estudiante, e.nombres, e.apellidos, " +
+            "g.nombre AS nombre_grado, n.nombre AS nombre_nivel, c.nombre AS nombre_carrera " +
+            "FROM estudiante e " +
+            "INNER JOIN usuario u ON e.id_usuario = u.id_usuario " +
+            "LEFT JOIN inscripcion i ON e.id_estudiante = i.id_estudiante " + 
+            "LEFT JOIN grado g ON i.id_grado = g.id_grado " +
+            "LEFT JOIN nivel n ON g.id_nivel = n.id_nivel " +
+            "LEFT JOIN carrera c ON g.id_carrera = c.id_carrera " + 
+            "WHERE e.id_usuario IS NOT NULL " +
+            "ORDER BY e.id_estudiante DESC LIMIT ? OFFSET ?";
+
+        try (Connection conexion = DBConnectionSingleton.getInstance().getConnection();
+             PreparedStatement psCount = conexion.prepareStatement(sqlCount);
+             ResultSet rsCount = psCount.executeQuery()) {
+             
+            int totalRegistros = 0;
+            if (rsCount.next()) totalRegistros = rsCount.getInt(1);
+            
+            int totalPaginas = (int) Math.ceil((double) totalRegistros / limite);
+            int offset = (pagina - 1) * limite;
+            
+            try (PreparedStatement psData = conexion.prepareStatement(sqlData)) {
+                psData.setInt(1, limite); 
+                psData.setInt(2, offset);
+                
+                try (ResultSet rsData = psData.executeQuery()) {
+                    while (rsData.next()) {
+                        ListadoAlumnoDTO dto = new ListadoAlumnoDTO();
+                        dto.setIdUsuario(rsData.getInt("id_usuario"));
+                        dto.setIdEstudiante(rsData.getInt("id_estudiante"));
+                        dto.setNombres(rsData.getString("nombres"));
+                        dto.setApellidos(rsData.getString("apellidos"));
+                        dto.setCorreo(rsData.getString("correo"));
+                        dto.setEstado(rsData.getBoolean("estado_usuario"));                        
+                        dto.setGrado(rsData.getString("nombre_grado") != null ? rsData.getString("nombre_grado") : "Sin asignar");
+                        dto.setNivel(rsData.getString("nombre_nivel") != null ? rsData.getString("nombre_nivel") : "Sin asignar");
+                        dto.setCarrera(rsData.getString("nombre_carrera") != null ? rsData.getString("nombre_carrera") : "N/A");
+                        
+                        lista.add(dto);
+                    }
+                }
+            }
+            respuesta.setAlumnos(lista);
+            respuesta.setTotalRegistros(totalRegistros);
+            respuesta.setTotalPaginas(totalPaginas);
+
+        } catch (SQLException e) {
+            System.err.println("Error al listar alumnos: " + e.getMessage());
+        }
+        return respuesta;
     }
 }

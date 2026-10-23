@@ -320,4 +320,83 @@ public class EmpleadoDAO {
             } catch (SQLException e) { }
         }
     }
+    
+   
+    public PaginaEmpleadosDTO obtenerPersonalOperativoPaginado(int pagina, int limite) {
+        PaginaEmpleadosDTO respuesta = new PaginaEmpleadosDTO();
+        List<ListadoEmpleadoDTO> lista = new ArrayList<>();
+    
+        String sqlCount = "SELECT COUNT(*) FROM usuario u INNER JOIN empleado e ON u.id_usuario = e.id_usuario WHERE u.id_rol NOT IN (1, 2, 5)";
+        String sqlData = 
+            "SELECT u.id_usuario, u.correo, u.id_rol, u.activo, " +
+            "e.id_empleado, e.nombres, e.apellidos, e.puesto, e.fecha_contratacion, e.salario " +
+            "FROM usuario u INNER JOIN empleado e ON u.id_usuario = e.id_usuario " +
+            "WHERE u.id_rol NOT IN (1, 2, 5) " +
+            "ORDER BY u.id_usuario DESC LIMIT ? OFFSET ?";
+
+        try (Connection conexion = DBConnectionSingleton.getInstance().getConnection();
+             PreparedStatement psCount = conexion.prepareStatement(sqlCount);
+             ResultSet rsCount = psCount.executeQuery()) {
+             
+            int totalRegistros = 0;
+            if (rsCount.next()) {
+                totalRegistros = rsCount.getInt(1);
+            }
+            int totalPaginas = (int) Math.ceil((double) totalRegistros / limite);
+            int offset = (pagina - 1) * limite;
+            
+            try (PreparedStatement psData = conexion.prepareStatement(sqlData)) {
+                psData.setInt(1, limite); 
+                psData.setInt(2, offset);
+                try (ResultSet rsData = psData.executeQuery()) {
+                    while (rsData.next()) {
+                        ListadoEmpleadoDTO emp = new ListadoEmpleadoDTO();
+                        // Usuario
+                        emp.setIdUsuario(rsData.getInt("id_usuario"));
+                        emp.setCorreo(rsData.getString("correo"));
+                        emp.setIdRol(rsData.getInt("id_rol"));
+                        emp.setEstado(rsData.getBoolean("activo")); 
+                        // Empleado
+                        emp.setIdEmpleado(rsData.getInt("id_empleado"));
+                        emp.setNombre(rsData.getString("nombres"));
+                        emp.setApellidos(rsData.getString("apellidos"));
+                        emp.setPuesto(rsData.getString("puesto"));
+                        emp.setSalario(rsData.getDouble("salario"));
+                        
+                        java.sql.Date fechaDb = rsData.getDate("fecha_contratacion");
+                        emp.setFechaContratacion(fechaDb != null ? fechaDb.toString() : ""); 
+                        
+                        lista.add(emp);
+                    }
+                }
+            }
+            respuesta.setEmpleados(lista);
+            respuesta.setTotalRegistros(totalRegistros);
+            respuesta.setTotalPaginas(totalPaginas);
+
+        } catch (SQLException e) {
+            System.err.println("Error al listar personal operativo: " + e.getMessage());
+        }
+        return respuesta;
+    }
+    
+
+    public boolean modificarPersonalOperativo(ListadoEmpleadoDTO dto) {
+        String sqlEmpleado = "UPDATE empleado SET nombres = ?, apellidos = ?, salario = ? WHERE id_empleado = ?";
+        
+        try (Connection conexion = DBConnectionSingleton.getInstance().getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sqlEmpleado)) {
+             
+            ps.setString(1, dto.getNombre());
+            ps.setString(2, dto.getApellidos());
+            ps.setDouble(3, dto.getSalario());
+            ps.setInt(4, dto.getIdEmpleado());
+            
+            return ps.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            System.err.println("Error al modificar personal operativo: " + e.getMessage());
+            return false;
+        }
+    }
 }

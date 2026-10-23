@@ -1,0 +1,77 @@
+<div class="container-fluid mt-4 animate-fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">Gestión de Personal Administrativo</h3>
+        <button *ngIf="!mostrarFormulario" class="btn btn-esmeralda fw-semibold shadow-sm px-3 py-2" (click)="abrirFormulario()">
+            <i class="fas fa-user-plus me-2"></i>Registrar Nuevo Empleado
+        </button>
+    </div>
+
+    <div *ngIf="mensajeExito" class="alert alert-success fw-semibold shadow-sm animate-fade-in">
+        <i class="fas fa-check-circle me-2"></i>{{ mensajeExito }}
+    </div>
+
+    <!-- Tabla -->
+    <div *ngIf="!mostrarFormulario" class="card card-tabla bg-white animate-fade-in">
+        <div class="card-body p-0 table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr class="table-header-esmeralda bg-white">
+                        <th class="ps-4">Nombres y Apellidos</th>
+                        <th>Correo</th>
+                        <th>Puesto</th>
+                        <th>Sueldo</th>
+                        <th>Fecha Contratacion</th>
+                        <th>Estado</th>
+                        <th class="text-center pe-4">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of listaPersonal">
+                        <td class="ps-4 fw-bold text-dark">{{ emp.nombre }} {{ emp.apellidos }}</td>
+                        <td class="text-muted">{{ emp.correo }}</td>
+                        <td>{{ emp.puesto }}</td>
+                        <td class="text-esmeralda fw-bold">GTQ{{ emp.salario | number:'1.2-2' }}</td>
+                        <td>{{ emp.fechaContratacion }}</td>
+                        <td>
+                            <span class="badge rounded-pill" [ngClass]="emp.estado ? 'bg-success' : 'bg-danger'" style="font-size: 0.8rem; padding: 0.4em 0.8em;">
+                                {{ emp.estado ? 'Activo' : 'Inactivo' }}
+                            </span>
+                        </td>
+                        <td class="text-center pe-4">
+                            <!-- Botón Editar -->
+                            <button class="btn btn-sm btn-outline-primary me-2 bg-white" (click)="abrirModal(emp)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <!-- Botón Desactivar/Activar -->
+                            <button class="btn btn-sm bg-white" [ngClass]="emp.estado ? 'btn-outline-danger' : 'btn-outline-success'" (click)="cambiarEstado(emp)">
+                                <i class="fas" [ngClass]="emp.estado ? 'fa-ban' : 'fa-check'"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <app-paginacion 
+            [paginaActual]="paginaActual" 
+            [totalPaginas]="totalPaginas" 
+            [totalRegistros]="totalRegistros"
+            (cambioPagina)="alCambiarPagina($event)">
+        </app-paginacion>
+    </div>
+
+    <app-registro-personal 
+        *ngIf="mostrarFormulario" 
+        (onCancelar)="cerrarFormulario()" 
+        (onGuardado)="refrescarTrasGuardar('Empleado registrado exitosamente.')">
+    </app-registro-personal>
+
+
+</div>
+
+    <app-modificar-personal 
+        *ngIf="empleadoSeleccionado" 
+        [empleadoBase]="empleadoSeleccionado"
+        (onCancelar)="cerrarModal()" 
+        (onGuardado)="refrescarTrasGuardar('Datos actualizados exitosamente.')">
+    </app-modificar-personal>

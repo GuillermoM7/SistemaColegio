@@ -1,0 +1,68 @@
+.bg-pizarra {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-bottom: 4px solid #10b981;
+}
+
+.text-esmeralda {
+    color: #10b981;
+}
+
+.btn-esmeralda {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-esmeralda:hover {
+    background-color: #059669;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4);
+}
+
+.bg-gris-claro {
+    background-color: #f8fafc;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-tabla {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+}
+
+.table-header-esmeralda th {
+    border-bottom: 3px solid #10b981 !important; 
+    color: #111827;
+    font-weight: 700;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: none;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    padding: 1rem 0.5rem;
+}

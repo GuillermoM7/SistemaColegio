@@ -51,8 +51,14 @@
 
         <!-- Director -->
         <li class="nav-item" *ngIf="idRolUsuario === 2">
-          <a class="nav-link" routerLink="./matriculas">
+          <a class="nav-link" routerLink="./director/personal">
             <i class="fas fa-address-book me-1"></i> Gestion Empleados
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="idRolUsuario === 2">
+          <a class="nav-link" routerLink="./director/personal">
+            <i class="fas fa-address-book me-1"></i> Gestion Alumnos
           </a>
         </li>
 

@@ -3,6 +3,7 @@ import { LoginComponent } from './components/login/login';
 import { PantallaPrincipal } from './components/pantalla-principal/pantalla-principal';
 import { GestionPersonal } from './components/gestion-personal/gestion-personal';
 import { ConfiguracionGlobalComponent } from './components/configuracion-global/configuracion-global';
+import { DirectorPersonalComponent } from './components/director-personal.component/director-personal.component';
 import { rolGuard } from './services/rol.guard';
 
 export const routes: Routes = [
@@ -12,7 +13,8 @@ export const routes: Routes = [
   { path: 'pantalla-principal', component: PantallaPrincipal,
     children: [
       {path: 'gestion-empleados-administrativos', component: GestionPersonal, canActivate: [rolGuard], data: { roles: [1] }},
-      { path: 'configuracion', component: ConfiguracionGlobalComponent, canActivate: [rolGuard], data: { roles: [1] } }
+      {path: 'configuracion', component: ConfiguracionGlobalComponent, canActivate: [rolGuard], data: { roles: [1] } },
+      { path: 'director/personal', component: DirectorPersonalComponent, canActivate: [rolGuard], data: { roles: [2] } },
   ]
   }
 ];

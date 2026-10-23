@@ -27,6 +27,7 @@ com\cunoc\colegio\apirestapp\recursos\AcademicoController.class
 com\cunoc\colegio\apirestapp\dto\RespuestaLoginDTO.class
 com\cunoc\colegio\database\entidades\AnioLectivo.class
 com\cunoc\colegio\apirestapp\recursos\Autenticacion.class
+com\cunoc\colegio\apirestapp\recursos\DirectorPersonalController.class
 com\cunoc\colegio\database\daos\EmpleadoDAO.class
 com\cunoc\colegio\database\entidades\Libro.class
 com\cunoc\colegio\database\entidades\Nivel.class
