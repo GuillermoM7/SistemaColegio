@@ -77,14 +77,22 @@ public class EstudianteDAO {
         List<ListadoAlumnoDTO> lista = new ArrayList<>();
         
         String sqlCount = "SELECT COUNT(*) FROM estudiante WHERE id_usuario IS NOT NULL";
-        
+
         String sqlData = 
             "SELECT u.id_usuario, u.correo, u.activo AS estado_usuario, " +
             "e.id_estudiante, e.nombres, e.apellidos, " +
             "g.nombre AS nombre_grado, n.nombre AS nombre_nivel, c.nombre AS nombre_carrera " +
             "FROM estudiante e " +
             "INNER JOIN usuario u ON e.id_usuario = u.id_usuario " +
-            "LEFT JOIN inscripcion i ON e.id_estudiante = i.id_estudiante " + 
+            
+            "LEFT JOIN (" +
+            "    SELECT i1.* FROM inscripcion i1 " +
+            "    INNER JOIN (" +
+            "        SELECT id_estudiante, MAX(id_inscripcion) AS ultima_inscripcion " +
+            "        FROM inscripcion GROUP BY id_estudiante" +
+            "    ) i2 ON i1.id_inscripcion = i2.ultima_inscripcion" +
+            ") i ON e.id_estudiante = i.id_estudiante " +
+            
             "LEFT JOIN grado g ON i.id_grado = g.id_grado " +
             "LEFT JOIN nivel n ON g.id_nivel = n.id_nivel " +
             "LEFT JOIN carrera c ON g.id_carrera = c.id_carrera " + 
@@ -130,5 +138,74 @@ public class EstudianteDAO {
             System.err.println("Error al listar alumnos: " + e.getMessage());
         }
         return respuesta;
+    }
+    
+    
+    public boolean enlazarUsuarioAEstudiante(int idEstudiante, String correo, String password, int idRolAlumno) {
+        Connection conexion = null;
+        PreparedStatement psUsuario = null;
+        PreparedStatement psEstudiante = null;
+        ResultSet rsKeys = null;
+
+        try {
+            conexion = DBConnectionSingleton.getInstance().getConnection();
+            conexion.setAutoCommit(false); 
+
+            String sqlUsuario = "INSERT INTO usuario (correo, contrasena, id_rol, activo) VALUES (?, ?, ?, true)";
+            psUsuario = conexion.prepareStatement(sqlUsuario, java.sql.Statement.RETURN_GENERATED_KEYS);
+            psUsuario.setString(1, correo);
+            psUsuario.setString(2, password);
+            psUsuario.setInt(3, idRolAlumno);
+            psUsuario.executeUpdate();
+
+            rsKeys = psUsuario.getGeneratedKeys();
+            int idUsuarioGenerado = 0;
+            if (rsKeys.next()) {
+                idUsuarioGenerado = rsKeys.getInt(1);
+            } else {
+                throw new SQLException("No se pudo obtener el ID del usuario.");
+            }
+
+            String sqlEstudiante = "UPDATE estudiante SET id_usuario = ? WHERE id_estudiante = ?";
+            psEstudiante = conexion.prepareStatement(sqlEstudiante);
+            psEstudiante.setInt(1, idUsuarioGenerado);
+            psEstudiante.setInt(2, idEstudiante);
+            
+            int filasActualizadas = psEstudiante.executeUpdate();
+            
+            if (filasActualizadas == 0) {
+                throw new SQLException("No se encontró el estudiante para actualizar.");
+            }
+
+            conexion.commit();
+            return true;
+
+        } catch (Exception e) {
+            if (conexion != null) {
+                try {
+                    conexion.rollback();
+                    System.out.println("Se ejecutó Rollback: " + e.getMessage());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            try { 
+                if (rsKeys != null) rsKeys.close(); 
+            } catch (SQLException e) { }
+            try {
+                if (psEstudiante != null) psEstudiante.close();
+            } catch (SQLException e) { }
+            try { 
+                if (psUsuario != null) psUsuario.close();
+            } catch (SQLException e) { }
+            try { 
+                if (conexion != null) {
+                    conexion.setAutoCommit(true); conexion.close();
+                } 
+            } catch (SQLException e) { }
+        }
     }
 }

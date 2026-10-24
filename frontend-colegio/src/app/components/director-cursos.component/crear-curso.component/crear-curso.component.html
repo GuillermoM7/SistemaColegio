@@ -1,0 +1,35 @@
+<div class="modal d-block animate-fade-in" tabindex="-1" style="background-color: rgba(0,0,0,0.6);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            
+            <div class="modal-header bg-pizarra text-white border-0 py-3">
+                <h5 class="modal-title fw-bold">
+                    <i class="fas fa-book-open me-2 text-esmeralda"></i>Registrar Nuevo Curso
+                </h5>
+                <button type="button" class="btn-close btn-close-white" (click)="onCancelar.emit()"></button>
+            </div>
+            
+            <div class="modal-body p-4 bg-white">
+                <div *ngIf="mensajeError" class="alert alert-danger fw-semibold">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ mensajeError }}
+                </div>
+                
+                <form (ngSubmit)="guardar()">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-dark">Nombre del Curso *</label>
+                        <input type="text" class="form-control" name="nombre" [(ngModel)]="nombreCurso" placeholder="Ej. Matemáticas Avanzadas" required autocomplete="off">
+                        <div class="form-text text-muted mt-2" style="font-size: 0.8rem;">
+                            <i class="fas fa-info-circle me-1"></i>El sistema verificará que no exista otro curso con este nombre exacto.
+                        </div>
+                    </div>
+
+                    <div class="text-end pt-3 border-top">
+                        <button type="button" class="btn btn-light border fw-semibold text-secondary me-2 px-4 shadow-sm" (click)="onCancelar.emit()">Cancelar</button>
+                        <button type="submit" class="btn btn-esmeralda px-4 shadow-sm"><i class="fas fa-save me-2"></i>Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

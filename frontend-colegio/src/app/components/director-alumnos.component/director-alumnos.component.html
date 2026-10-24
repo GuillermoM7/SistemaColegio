@@ -1,0 +1,62 @@
+<div class="container-fluid mt-4 animate-fade-in">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">Gestión de Acceso a Estudiantes</h3>
+        <button *ngIf="!mostrarFormulario" class="btn btn-esmeralda fw-semibold shadow-sm px-3 py-2" (click)="abrirFormulario()">
+            <i class="fas fa-key me-2"></i>Asignar Usuario a Estudiante
+        </button>
+    </div>
+
+    <div *ngIf="mensajeExito" class="alert alert-success fw-semibold shadow-sm animate-fade-in">
+        <i class="fas fa-check-circle me-2"></i>{{ mensajeExito }}
+    </div>
+
+    <div *ngIf="!mostrarFormulario" class="card card-tabla bg-white animate-fade-in">
+        <div class="card-body p-0 table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr class="table-header-esmeralda bg-white">
+                        <th class="ps-4">Nombres y Apellidos</th>
+                        <th>Correo</th>
+                        <th>Grado</th>
+                        <th>Nivel / Carrera</th>
+                        <th>Estado</th>
+                        <th class="text-center pe-4">Acceso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let alu of listaAlumnos">
+                        <td class="ps-4 fw-bold text-dark">{{ alu.nombres }} {{ alu.apellidos }}</td>
+                        <td class="text-muted">{{ alu.correo }}</td>
+                        <td>{{ alu.grado }}</td>
+                        <td>
+                            {{ alu.nivel }} 
+                            <span *ngIf="alu.carrera !== 'N/A'" class="text-muted" style="font-size: 0.85rem;"><br>{{ alu.carrera }}</span>
+                        </td>
+                        <td>
+                            <span class="badge rounded-pill" [ngClass]="alu.estado ? 'bg-success' : 'bg-danger'" style="font-size: 0.8rem; padding: 0.4em 0.8em;">
+                                {{ alu.estado ? 'Permitido' : 'Bloqueado' }}
+                            </span>
+                        </td>
+                        <td class="text-center pe-4">
+                            <button class="btn btn-sm bg-white shadow-sm" [ngClass]="alu.estado ? 'btn-outline-danger' : 'btn-outline-success'" (click)="cambiarEstado(alu)">
+                                <i class="fas" [ngClass]="alu.estado ? 'fa-ban' : 'fa-check'"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <app-paginacion 
+            [paginaActual]="paginaActual" [totalPaginas]="totalPaginas" [totalRegistros]="totalRegistros"
+            (cambioPagina)="alCambiarPagina($event)">
+        </app-paginacion>
+    </div>
+
+    <app-registro-usuario-alumno 
+        *ngIf="mostrarFormulario" 
+        (onCancelar)="cerrarFormulario()" 
+        (onGuardado)="refrescarTrasGuardar('Credenciales generadas exitosamente.')">
+    </app-registro-usuario-alumno>
+</div>

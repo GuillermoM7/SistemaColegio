@@ -1,0 +1,60 @@
+<div class="container-fluid mt-4 animate-fade-in">   
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">Gestión de Cursos Académicos</h3>       
+        <div class="d-flex w-50 justify-content-end">
+            <!-- Barra de Búsqueda -->
+            <div class="input-group shadow-sm me-3" style="max-width: 300px;">
+                <input type="text" class="form-control border-end-0" placeholder="Buscar curso..." 
+                        [(ngModel)]="terminoBusqueda" (keyup.enter)="buscar()">
+                <button *ngIf="terminoBusqueda" class="btn btn-outline-secondary border-start-0 border-end-0 bg-white" (click)="limpiarBusqueda()">
+                    <i class="fas fa-times text-muted"></i>
+                </button>
+                <button class="btn btn-esmeralda" (click)="buscar()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <!-- Botón -->
+            <button class="btn btn-esmeralda fw-semibold shadow-sm px-3 py-2 text-nowrap" (click)="abrirModal()">
+                <i class="fas fa-plus me-2"></i>Crear Curso
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="mensajeExito" class="alert alert-success fw-semibold shadow-sm animate-fade-in">
+        <i class="fas fa-check-circle me-2"></i>{{ mensajeExito }}
+    </div>
+
+    <!-- TABLA -->
+    <div class="card card-tabla bg-white animate-fade-in">
+        <div class="card-body p-0 table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr class="table-header-esmeralda bg-white">
+                        <th class="ps-4 text-center" style="width: 15%;">ID Curso</th>
+                        <th>Nombre del Curso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="listaCursos.length === 0">
+                        <td colspan="2" class="text-center text-muted py-4">
+                            <i class="fas fa-info-circle me-2"></i>No se encontraron cursos registrados.
+                        </td>
+                    </tr>
+                    
+                    <tr *ngFor="let cur of listaCursos">
+                        <td class="ps-4 fw-bold text-muted text-center">#{{ cur.idCurso }}</td>
+                        <td class="fw-bold text-dark">{{ cur.nombre }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <app-paginacion 
+            [paginaActual]="paginaActual" [totalPaginas]="totalPaginas" [totalRegistros]="totalRegistros"
+            (cambioPagina)="alCambiarPagina($event)">
+        </app-paginacion>
+    </div>
+</div>
+
+<app-crear-curso *ngIf="mostrarModal" (onCancelar)="cerrarModal()" (onGuardado)="refrescarTrasGuardar()"></app-crear-curso>

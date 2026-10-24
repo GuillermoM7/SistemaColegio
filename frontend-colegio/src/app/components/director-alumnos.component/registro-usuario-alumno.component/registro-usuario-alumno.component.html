@@ -1,0 +1,58 @@
+<div class="card shadow-sm border-0 animate-fade-in">
+    <div class="card-header bg-pizarra text-white fw-bold py-3">
+        <i class="fas fa-user-graduate me-2 text-esmeralda"></i>Asignar Acceso a Estudiante
+    </div>    
+    <div class="card-body p-4 bg-white">
+        <div *ngIf="mensajeError" class="alert alert-danger fw-semibold animate-fade-in">
+            <i class="fas fa-exclamation-triangle me-2"></i>{{ mensajeError }}
+        </div>
+        
+        <div *ngIf="estudiantesHuerfanos.length === 0" class="alert alert-info fw-semibold animate-fade-in">
+            <i class="fas fa-info-circle me-2"></i>No hay estudiantes pendientes. Todos los alumnos registrados ya cuentan con un usuario asignado.
+        </div>
+        
+        <form (ngSubmit)="guardar()" *ngIf="estudiantesHuerfanos.length > 0">
+            <div class="row">
+                <div class="col-md-6 border-end pe-4">
+                    <h6 class="text-muted fw-bold mb-4 border-bottom pb-2 text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.5px;">Selección de Alumno</h6>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-dark">Estudiante Inscrito (Sin Acceso) *</label>
+                        <select class="form-select" name="idEstudiante" [(ngModel)]="nuevoUsuario.idEstudiante" required>
+                            <option [ngValue]="0" disabled selected>-- Seleccione un Estudiante --</option>
+                            <option *ngFor="let est of estudiantesHuerfanos" [value]="est.idEstudiante">
+                                {{ est.nombres }} {{ est.apellidos }}
+                            </option>
+                        </select>
+                        <div class="form-text text-muted mt-2" style="font-size: 0.8rem;">
+                            <i class="fas fa-info-circle me-1"></i>Esta lista muestra únicamente a los alumnos ingresados por Secretaría.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 ps-4">
+                    <h6 class="text-muted fw-bold mb-4 border-bottom pb-2 text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.5px;">Nuevas Credenciales</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-dark">Correo Electrónico Institucional *</label>
+                        <input type="email" class="form-control" name="correo" [(ngModel)]="nuevoUsuario.correo" placeholder="alumno@colegio.com" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-dark">Contraseña Provisional *</label>
+                        <input type="password" class="form-control" name="password" [(ngModel)]="nuevoUsuario.password" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-end mt-4 pt-3 border-top bg-gris-claro p-3 rounded-bottom" style="margin: -1.5rem -1.5rem -1.5rem -1.5rem; border-bottom-left-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);">
+                <button type="button" class="btn btn-light border fw-semibold text-secondary me-2 px-4 shadow-sm" (click)="onCancelar.emit()">Cancelar</button>
+                <button type="submit" class="btn btn-esmeralda px-4"><i class="fas fa-key me-2"></i>Generar Credenciales</button>
+            </div>
+        </form>
+
+        <div class="text-end mt-4 pt-3 border-top bg-gris-claro p-3 rounded-bottom" style="margin: -1.5rem -1.5rem -1.5rem -1.5rem; border-bottom-left-radius: var(--bs-border-radius); border-bottom-right-radius: var(--bs-border-radius);" *ngIf="estudiantesHuerfanos.length === 0">
+            <button type="button" class="btn btn-light border fw-semibold text-secondary px-4 shadow-sm" (click)="onCancelar.emit()">Regresar</button>
+        </div>
+    </div>
+</div>
