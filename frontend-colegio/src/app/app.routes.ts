@@ -7,6 +7,7 @@ import { DirectorPersonalComponent } from './components/director-personal.compon
 import { rolGuard } from './services/rol.guard';
 import { DirectorAlumnosComponent } from './components/director-alumnos.component/director-alumnos.component';
 import { DirectorCursosComponent } from './components/director-cursos.component/director-cursos.component';
+import { GradosSeccionesComponent } from './components/grados-secciones.component/grados-secciones.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,7 +19,8 @@ export const routes: Routes = [
       {path: 'configuracion', component: ConfiguracionGlobalComponent, canActivate: [rolGuard], data: { roles: [1] } },
       {path: 'director/personal', component: DirectorPersonalComponent, canActivate: [rolGuard], data: { roles: [2] } },
       {path: 'director/alumnos', component: DirectorAlumnosComponent, canActivate: [rolGuard], data: { roles: [2] } },
-      {path: 'director/cursos', component: DirectorCursosComponent, canActivate: [rolGuard], data: { roles: [2] } }
+      {path: 'director/cursos', component: DirectorCursosComponent, canActivate: [rolGuard], data: { roles: [2] } },
+      {path: 'director/grados/secciones', component: GradosSeccionesComponent, canActivate: [rolGuard], data: { roles: [2] } },
   ]
   }
 ];

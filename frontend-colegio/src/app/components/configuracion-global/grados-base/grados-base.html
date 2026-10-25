@@ -28,12 +28,12 @@
         <form (ngSubmit)="guardarGrado()" class="row gx-2 mb-4 align-items-center">
             <div [ngClass]="esDiversificado ? 'col-md-5' : 'col-md-9'">
                 <input type="text" class="form-control bg-light" placeholder="Nuevo grado (Ej. Cuarto, Quinto...)" 
-                    name="nombreGrado" [(ngModel)]="nuevoGrado.nombre" required>
+                    name="nombreGrado" [(ngModel)]="nuevoGrado.nombre" required autocomplete="off">
             </div>
 
-            <!-- Seleccion de carreras -->
+            <!-- Selección de carreras -->
             <div *ngIf="esDiversificado" class="col-md-4">
-                <select class="form-select bg-light" name="idCarrera" [(ngModel)]="nuevoGrado.idCarrera" required>
+                <select class="form-select bg-light" name="idCarrera" [(ngModel)]="nuevoGrado.idCarrera" (ngModelChange)="aplicarFiltroCarrera()" required>
                     <option [ngValue]="undefined" disabled selected>-- Seleccione una Carrera --</option>
                     <option *ngFor="let carrera of carrerasActivas" [value]="carrera.idCarrera">
                         {{ carrera.nombre }}
@@ -54,26 +54,51 @@
         <!-- Tabla de Grados -->
         <h6 class="fw-bold text-secondary mb-3">Grados Registrados en este Nivel</h6>
         <div class="table-responsive">
-                        <table class="table table-hover align-middle border">
+            <table class="table table-hover align-middle border">
                 <thead class="table-light text-secondary">
                     <tr>
-                        <th class="ps-4">ID GRADO</th>
+                        <th class="ps-4" style="width: 15%;">ID GRADO</th>
                         <th>NOMBRE DEL GRADO</th>
+                        <th class="text-center" style="width: 15%;">ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngIf="gradosFiltrados.length === 0">
-                        <td colspan="2" class="text-center py-4 text-muted">
-                            <i class="fas fa-folder-open me-2"></i>No hay grados registrados para este nivel.
+                    <tr *ngIf="gradosVisibles.length === 0">
+                        <td colspan="3" class="text-center py-4 text-muted">
+                            <i class="fas fa-folder-open me-2"></i>No hay grados registrados que coincidan con este filtro.
                         </td>
                     </tr>
-                    <tr *ngFor="let grado of gradosFiltrados">
+                    
+                    <tr *ngFor="let grado of gradosVisibles">
                         <td class="ps-4 fw-bold text-dark"># {{ grado.idGrado }}</td>
+                        
                         <td>
-                            {{ grado.nombre }}
-                            <span *ngIf="grado.nombreCarrera" class="badge bg-info text-dark ms-2 fw-semibold shadow-sm">
-                                <i class="fas fa-graduation-cap me-1"></i>{{ grado.nombreCarrera }}
-                            </span>
+                            <div *ngIf="gradoEditandoId !== grado.idGrado">
+                                {{ grado.nombre }}
+                                <span *ngIf="grado.nombreCarrera" class="badge bg-info text-dark ms-2 fw-semibold shadow-sm">
+                                    <i class="fas fa-graduation-cap me-1"></i>{{ grado.nombreCarrera }}
+                                </span>
+                            </div>
+                            <div *ngIf="gradoEditandoId === grado.idGrado">
+                                <input type="text" class="form-control form-control-sm border-primary" 
+                                    [(ngModel)]="gradoEditandoNombre" (keyup.enter)="guardarEdicion(grado)">
+                            </div>
+                        </td>
+
+                        <td class="text-center">
+                            <!-- Botón Editar -->
+                            <button *ngIf="gradoEditandoId !== grado.idGrado" class="btn btn-sm btn-outline-primary shadow-sm" (click)="iniciarEdicion(grado)" title="Modificar nombre">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            
+                            <div *ngIf="gradoEditandoId === grado.idGrado" class="d-flex justify-content-center gap-2">
+                                <button class="btn btn-sm btn-success shadow-sm" (click)="guardarEdicion(grado)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-secondary shadow-sm" (click)="cancelarEdicion()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

@@ -69,4 +69,18 @@ public class GradoDAO {
         return lista;
     }
 
+    
+    public boolean actualizarNombreGrado(int idGrado, String nuevoNombre) {
+        String sql = "UPDATE grado SET nombre = ? WHERE id_grado = ?";
+        try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nuevoNombre);
+            ps.setInt(2, idGrado);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
 }

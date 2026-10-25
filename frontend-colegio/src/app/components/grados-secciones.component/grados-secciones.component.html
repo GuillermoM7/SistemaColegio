@@ -1,0 +1,98 @@
+<div class="container-fluid mt-4 animate-fade-in">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">Gestión de Grados y Secciones</h3>
+        <div *ngIf="mensajeExitoGlobal" class="alert alert-success alert-dismissible fade show shadow-sm mt-3 animate-fade-in border-success" role="alert">
+            <i class="fas fa-check-circle me-2 fa-lg"></i><strong>Operación completada:</strong> {{ mensajeExitoGlobal }}
+            <button type="button" class="btn-close" (click)="mensajeExitoGlobal = ''"></button>
+        </div>
+    </div>
+
+    <div *ngIf="vistaActual === 1" class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            
+            <!-- Comboboxes -->
+            <div class="row gx-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold text-secondary">Nivel Académico</label>
+                    <select class="form-select bg-light" [(ngModel)]="nivelSeleccionado" (change)="alCambiarNivel()">
+                        <option value="0" disabled selected>-- Seleccione un Nivel --</option>
+                        <option *ngFor="let nivel of niveles" [value]="nivel.idNivel">
+                            {{ nivel.nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4" *ngIf="esDiversificado">
+                    <label class="form-label fw-semibold text-secondary">Carrera</label>
+                    <select class="form-select bg-light" [(ngModel)]="carreraSeleccionada" (change)="buscarGrados()">
+                        <option value="0" disabled selected>-- Seleccione una Carrera --</option>
+                        <option *ngFor="let carrera of carreras" [value]="carrera.idCarrera">
+                            {{ carrera.nombre }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tabla de Resultados -->
+            <div class="table-responsive" *ngIf="grados.length > 0">
+                <table class="table table-hover align-middle border">
+                    <thead class="table-light text-secondary">
+                        <tr>
+                            <th class="ps-4" style="width: 10%;">ID</th>
+                            <th>GRADO</th>
+                            <th class="text-center" style="width: 30%;">GESTIÓN ANUAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let grado of grados">
+                            <td class="ps-4 fw-bold text-dark"># {{ grado.idGrado }}</td>
+                            <td>
+                                {{ grado.nombreGrado }}
+                                <span *ngIf="grado.nombreCarrera" class="badge bg-info text-dark ms-2">
+                                    {{ grado.nombreCarrera }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <!-- Botón Asignar Cursos -->
+                                <button class="btn btn-sm px-3 me-2 fw-semibold shadow-sm" 
+                                        [ngClass]="grado.tieneCurriculoActivo ? 'btn-secondary opacity-50' : 'btn-esmeralda'"
+                                        [disabled]="grado.tieneCurriculoActivo"
+                                        (click)="abrirAsignacionCursos(grado)">
+                                    <i class="fas fa-book me-1"></i> 1. Cursos
+                                </button>
+
+                                <!-- Botón Secciones -->
+                                <button class="btn btn-sm px-3 fw-semibold shadow-sm"
+                                        [ngClass]="!grado.tieneCurriculoActivo ? 'btn-secondary opacity-50' : 'btn-primary'"
+                                        [disabled]="!grado.tieneCurriculoActivo"
+                                        (click)="abrirSecciones(grado)">
+                                    <i class="fas fa-users me-1"></i> 2. Secciones
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="nivelSeleccionado > 0 && grados.length === 0" class="text-center py-5 text-muted">
+                <i class="fas fa-folder-open fa-2x mb-3"></i>
+                <h5>No hay grados para mostrar en esta selección.</h5>
+            </div>
+
+        </div>
+    </div>
+
+    <app-asignar-cursos 
+        *ngIf="vistaActual === 2" 
+        [gradoEnFoco]="gradoEnFoco" 
+        (onVolver)="volverVistaPrincipal($event)">
+    </app-asignar-cursos>
+
+    <app-gestor-secciones
+        *ngIf="vistaActual === 3"
+        [gradoEnFoco]="gradoEnFoco"
+        (onVolver)="volverVistaPrincipal()">
+    </app-gestor-secciones>
+
+</div>

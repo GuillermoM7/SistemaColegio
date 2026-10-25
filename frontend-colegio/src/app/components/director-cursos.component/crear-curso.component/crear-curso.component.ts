@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DirectorCursoService } from '../../../services/director-curso.service';
@@ -16,17 +16,24 @@ export class CrearCursoComponent {
   nombreCurso: string = '';
   mensajeError: string = '';
 
-  constructor(private cursoService: DirectorCursoService) {}
+  constructor(
+    private cursoService: DirectorCursoService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   
   guardar() {
     if (!this.nombreCurso || this.nombreCurso.trim().length === 0) {
       this.mensajeError = 'El nombre del curso es obligatorio.';
+      this.cdr.detectChanges();
       return;
     }
     this.cursoService.crearCurso({ nombre: this.nombreCurso }).subscribe({
       next: () => this.onGuardado.emit(),
-      error: (err) => this.mensajeError = err.error?.mensaje || 'Error al crear el curso.'
+      error: (err) => {
+        this.mensajeError = err.error?.mensaje || 'Error al crear el curso.';
+        this.cdr.detectChanges();
+      }
     });
   }
   

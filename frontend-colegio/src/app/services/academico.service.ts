@@ -59,4 +59,9 @@ export class AcademicoService {
     crearGrado(grado: Grado): Observable<any> {
         return this.http.post(`${this.apiUrl}/grados`, grado);
     }
+
+    
+    actualizarGrado(grado: Grado): Observable<any> {
+        return this.http.put(`${this.apiUrl}/grados/${grado.idGrado}`, grado);
+}
 }

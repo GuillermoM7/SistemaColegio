@@ -100,4 +100,24 @@ public class AcademicoController {
                 .build();
     }
     
+    
+    @PUT
+    @Path("/grados/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarGrado(@PathParam("id") int idGrado, Grado grado) {
+        if (grado.getNombre() == null || grado.getNombre().trim().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"mensaje\": \"El nombre del grado es obligatorio.\"}")
+                    .build();
+        }
+
+        if (gradoDAO.actualizarNombreGrado(idGrado, grado.getNombre())) {
+            return Response.ok("{\"mensaje\": \"Nombre del grado actualizado correctamente.\"}").build();
+        }
+        
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity("{\"mensaje\": \"Error al actualizar el grado en la base de datos.\"}")
+                .build();
+    }
 }
