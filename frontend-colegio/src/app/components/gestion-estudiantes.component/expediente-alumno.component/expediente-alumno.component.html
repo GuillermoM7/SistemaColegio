@@ -1,0 +1,82 @@
+<div class="container-fluid mt-2 animate-fade-in">
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-pizarra text-white py-3 border-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">
+                <i class="fas fa-folder-open text-esmeralda me-2"></i>Expediente Académico
+            </h5>
+            <button class="btn btn-sm btn-outline-light fw-bold px-3" (click)="onVolver.emit()">
+                <i class="fas fa-arrow-left me-2"></i>Volver al Dashboard
+            </button>
+        </div>
+        <div class="card-body bg-gris-claro">
+            <h5 class="fw-bold text-dark mb-1">{{ estudiante.nombres }} {{ estudiante.apellidos }}</h5>
+            <p class="text-muted mb-0">ID: #{{ estudiante.idEstudiante }} | Estado: <span class="fw-bold text-esmeralda">{{ estudiante.estado }}</span></p>
+        </div>
+    </div>
+
+<!-- Tabla de Historial -->
+    <div class="card card-tabla border-0">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-bold text-secondary mb-0">
+                    <i class="fas fa-graduation-cap me-2 text-primary"></i>Cursos Asignados y Calificaciones
+                </h5>
+                
+                <div *ngIf="aniosDisponibles.length > 0" class="d-flex align-items-center animate-fade-in">
+                    <label class="fw-bold text-muted me-2 mb-0">Filtrar por Año:</label>
+                    <select class="form-select form-select-sm border-primary shadow-sm fw-bold text-primary" style="width: auto;" [(ngModel)]="anioSeleccionado">
+                        <option *ngFor="let anio of aniosDisponibles" [value]="anio">Ciclo {{ anio }}</option>
+                        <option [value]="0">Ver Todos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div *ngIf="cargando" class="text-center py-5">
+                <i class="fas fa-spinner fa-spin fa-3x text-esmeralda mb-3"></i>
+                <p class="text-muted">Cargando historial...</p>
+            </div>
+
+            <div class="table-responsive" *ngIf="!cargando">
+                <table class="table table-hover align-middle">
+                    <thead class="table-header-esmeralda">
+                        <tr>
+                            <th *ngIf="anioSeleccionado == 0">Ciclo</th> 
+                            <th>Materia / Curso</th>
+                            <th class="text-center">Zona</th>
+                            <th class="text-center">Ex. Final</th>
+                            <th class="text-center">Nota Total</th>
+                            <th class="text-center">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="historialCursos.length === 0">
+                            <td [attr.colspan]="anioSeleccionado == 0 ? 6 : 5" class="text-center py-5 text-muted">
+                                <i class="fas fa-book-open fa-2x mb-2 d-block"></i>
+                                El estudiante no tiene asignaciones o historial registrado.
+                            </td>
+                        </tr>
+
+                        <tr *ngFor="let curso of cursosFiltrados" class="animate-fade-in">
+                            
+                            <td class="fw-bold text-secondary" *ngIf="anioSeleccionado == 0">{{ curso.anioLectivo }}</td>
+                            <td class="fw-semibold text-dark">{{ curso.nombreCurso }}</td>
+                            
+                            <td class="text-center">{{ curso.zona !== null ? curso.zona : '-' }}</td>
+                            <td class="text-center">{{ curso.examenFinal !== null ? curso.examenFinal : '-' }}</td>
+                            
+                            <td class="text-center fw-bold" [ngClass]="{'text-danger': curso.notaTotal !== null && curso.notaTotal < 60, 'text-success': curso.notaTotal !== null && curso.notaTotal >= 60}">
+                                {{ curso.notaTotal !== null ? curso.notaTotal : 'Pendiente' }}
+                            </td>
+                            
+                            <td class="text-center">
+                                <span class="badge bg-warning text-dark" *ngIf="curso.notaTotal === null">En Curso</span>
+                                <span class="badge bg-danger" *ngIf="curso.notaTotal !== null && curso.notaTotal < 60">Reprobado</span>
+                                <span class="badge bg-success" *ngIf="curso.notaTotal !== null && curso.notaTotal >= 60">Aprobado</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

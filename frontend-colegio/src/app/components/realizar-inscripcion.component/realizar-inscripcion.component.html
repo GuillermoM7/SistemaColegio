@@ -1,0 +1,126 @@
+<div class="container-fluid mt-4 animate-fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">Inscripción Oficial</h3>
+    </div>
+    <!-- Alertas de Respuesta -->
+    <div *ngIf="mensajeExito" class="alert alert-success shadow-sm border-success animate-fade-in">
+        <i class="fas fa-check-circle me-2 fa-lg"></i><strong>Completado:</strong> {{ mensajeExito }}
+    </div>
+    <div *ngIf="mensajeError" class="alert alert-danger shadow-sm border-danger animate-fade-in">
+        <i class="fas fa-exclamation-triangle me-2"></i>{{ mensajeError }}
+    </div>
+
+    <div class="row g-4">       
+        <!-- Columna 1 -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-pizarra text-white py-3 border-0">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-user-graduate me-2"></i>1. Estudiante</h5>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Buscador -->
+                    <div *ngIf="!estudianteSeleccionado" class="animate-fade-in">
+                        <label class="form-label fw-bold text-secondary">Buscar alumno activo</label>
+                        <div class="input-group shadow-sm mb-3">
+                            <input type="text" class="form-control" placeholder="Nombres o apellidos..." 
+                                [(ngModel)]="terminoBusqueda" (keyup)="buscarEstudiante()" autocomplete="off">
+                            <button class="btn btn-primary" (click)="buscarEstudiante()"><i class="fas fa-search"></i></button>
+                        </div>
+
+                        <div class="list-group shadow-sm" *ngIf="resultadosBusqueda.length > 0">
+                            <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                    *ngFor="let est of resultadosBusqueda" (click)="seleccionarEstudiante(est)">
+                                <span class="fw-semibold">{{ est.nombres }} {{ est.apellidos }}</span>
+                                <span class="badge bg-secondary">ID: {{ est.idEstudiante }}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Seleccion -->
+                    <div *ngIf="estudianteSeleccionado" class="text-center animate-fade-in p-3 bg-light rounded border border-2 border-primary">
+                        <i class="fas fa-user-check fa-3x text-primary mb-3 mt-2"></i>
+                        <h5 class="fw-bold text-dark">{{ estudianteSeleccionado.nombres }} {{ estudianteSeleccionado.apellidos }}</h5>
+                        <p class="text-muted mb-3">ID Estudiante: #{{ estudianteSeleccionado.idEstudiante }}</p>
+                        
+                        <div class="alert alert-info py-2 shadow-sm text-start mb-4">
+                            <i class="fas fa-info-circle me-2"></i>Encargado: {{ estudianteSeleccionado.datosEncargados }}
+                        </div>
+
+                        <button class="btn btn-outline-danger btn-sm px-4 fw-bold shadow-sm" (click)="deseleccionarEstudiante()">
+                            <i class="fas fa-times me-2"></i>Cambiar Estudiante
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna 2 -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm h-100" [ngClass]="{'opacity-50 pointer-events-none': !estudianteSeleccionado}">
+                <div class="card-header bg-primary text-white py-3 border-0">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-school me-2"></i>2. Asignación Académica</h5>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Nivel</label>
+                            <select class="form-select bg-light" [(ngModel)]="nivelId" (change)="alCambiarNivel()">
+                                <option value="0" disabled>-- Seleccione --</option>
+                                <option *ngFor="let n of niveles" [value]="n.idNivel">{{ n.nombre }}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6" *ngIf="esDiversificado">
+                            <label class="form-label fw-bold text-secondary">Carrera</label>
+                            <select class="form-select bg-light" [(ngModel)]="carreraId" (change)="buscarGrados()">
+                                <option value="0" disabled>-- Seleccione --</option>
+                                <option *ngFor="let c of carreras" [value]="c.idCarrera">{{ c.nombre }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Grado</label>
+                            <select class="form-select bg-light" [(ngModel)]="gradoId" (change)="alCambiarGrado()" [disabled]="grados.length === 0">
+                                <option value="0" disabled>-- Seleccione --</option>
+                                <option *ngFor="let g of grados" [value]="g.idGrado">{{ g.nombreGrado }}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary">Sección Oficial</label>
+                            <select class="form-select bg-light border-primary" [(ngModel)]="seccionId" [disabled]="secciones.length === 0">
+                                <option value="0" disabled>-- Seleccione --</option>
+                                <option *ngFor="let s of secciones" [value]="s.idSeccion">Sección {{ s.nombre }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="text-muted my-4">
+
+                    <!-- Advertensia -->
+                    <div class="alert alert-warning shadow-sm border-warning d-flex align-items-center mb-4 p-3">
+                        <i class="fas fa-file-invoice-dollar fa-2x text-warning me-3"></i>
+                        <div>
+                            <strong>Acción Financiera:</strong> Al procesar, el sistema generará automáticamente la cuenta por cobrar (Inscripción y 10 mensualidades) con base en la tarifa del nivel seleccionado.
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-esmeralda fw-bold shadow px-5 py-2" 
+                                [disabled]="!formularioValido || cargando" 
+                                (click)="procesarInscripcion()">
+                            <i class="fas" [ngClass]="cargando ? 'fa-spinner fa-spin' : 'fa-check-double'"></i> 
+                            {{ cargando ? ' Procesando...' : 'Completar Inscripción' }}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -14,7 +14,7 @@ public class NivelDAO {
     
     public List<Nivel> listarNiveles() {
         List<Nivel> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Nivel ORDER BY id_nivel ASC";
+        String sql = "SELECT id_nivel, nombre FROM Nivel ORDER BY id_nivel ASC";
         try (Connection conexion = DBConnectionSingleton.getInstance().getConnection();
              PreparedStatement ps = conexion.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

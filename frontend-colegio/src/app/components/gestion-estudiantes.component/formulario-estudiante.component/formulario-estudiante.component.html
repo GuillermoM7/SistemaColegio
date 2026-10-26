@@ -1,0 +1,39 @@
+<div class="card border-0 shadow-sm animate-fade-in">
+    <div class="card-header bg-pizarra text-white py-3 border-0">
+        <h5 class="mb-0 fw-bold">
+            <i class="fas" [ngClass]="estudianteEdicion ? 'fa-user-edit' : 'fa-user-plus'"></i> 
+            {{ estudianteEdicion ? 'Modificar Estudiante' : 'Nuevo Estudiante' }}
+        </h5>
+    </div>
+    <div class="card-body p-4">
+        <div *ngIf="mensajeError" class="alert alert-danger shadow-sm"><i class="fas fa-exclamation-triangle me-2"></i>{{ mensajeError }}</div>
+        
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary">Nombres</label>
+                <input type="text" class="form-control" [(ngModel)]="estudiante.nombres" placeholder="Nombres completos">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary">Apellidos</label>
+                <input type="text" class="form-control" [(ngModel)]="estudiante.apellidos" placeholder="Apellidos completos">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold text-secondary">Información Médica Básica</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="estudiante.infoMedica" placeholder="Alergias, tipo de sangre, condiciones especiales..."></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold text-secondary">Datos del Encargado / Padres</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="estudiante.datosEncargados" placeholder="Nombres, teléfonos, DPI, dirección..."></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 border-top pt-3">
+            <button class="btn btn-light border fw-semibold px-4" (click)="onVolver.emit()">Cancelar</button>
+            <button class="btn btn-esmeralda fw-bold px-5" (click)="guardar()">
+                <i class="fas fa-save me-2"></i>{{ estudianteEdicion ? 'Guardar Cambios' : 'Registrar Estudiante' }}
+            </button>
+        </div>
+    </div>
+</div>

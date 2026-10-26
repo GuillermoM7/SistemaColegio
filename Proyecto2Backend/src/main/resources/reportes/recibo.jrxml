@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="ReciboPago" pageWidth="595" pageHeight="400" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+    
+    <parameter name="id_pago" class="java.lang.Integer"/>
+    
+    <queryString>
+        <![CDATA[
+            SELECT p.id_pago, DATE_FORMAT(p.fecha_pago, '%d/%m/%Y %H:%i') AS fecha, 
+                   p.descripcion, p.monto, e.nombres AS est_nom, e.apellidos AS est_ape, 
+                   sec.nombres AS sec_nom, sec.apellidos AS sec_ape 
+            FROM pago p 
+            JOIN estudiante e ON p.id_estudiante = e.id_estudiante 
+            JOIN empleado sec ON p.id_secretaria = sec.id_empleado 
+            WHERE p.id_pago = $P{id_pago}
+        ]]>
+    </queryString>
+    
+    <field name="id_pago" class="java.lang.Integer"/>
+    <field name="fecha" class="java.lang.String"/>
+    <field name="descripcion" class="java.lang.String"/>
+    <field name="monto" class="java.math.BigDecimal"/>
+    <field name="est_nom" class="java.lang.String"/>
+    <field name="est_ape" class="java.lang.String"/>
+    <field name="sec_nom" class="java.lang.String"/>
+    <field name="sec_ape" class="java.lang.String"/>
+    
+    <title>
+        <band height="60">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[SISTEMA ACADÉMICO - RECIBO OFICIAL]]></text>
+            </staticText>
+            <line>
+                <reportElement x="0" y="45" width="555" height="1"/>
+            </line>
+        </band>
+    </title>
+    
+    <detail>
+        <band height="200">
+            <textField>
+                <reportElement x="20" y="10" width="500" height="20"/>
+                <textElement><font size="12" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["No. Transacción: " + $F{id_pago}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="20" y="35" width="500" height="20"/>
+                <textElement><font size="12"/></textElement>
+                <textFieldExpression><![CDATA["Fecha y Hora: " + $F{fecha}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="20" y="60" width="500" height="20"/>
+                <textElement><font size="12"/></textElement>
+                <textFieldExpression><![CDATA["Estudiante: " + $F{est_nom} + " " + $F{est_ape}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="20" y="100" width="500" height="20"/>
+                <textElement><font size="12" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["CONCEPTO: " + $F{descripcion}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="20" y="125" width="500" height="30" forecolor="#006633"/>
+                <textElement><font size="16" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["TOTAL PAGADO: Q" + $F{monto}]]></textFieldExpression>
+            </textField>
+            
+            <line>
+                <reportElement x="20" y="170" width="515" height="1" forecolor="#CCCCCC"/>
+            </line>
+            <textField>
+                <reportElement x="20" y="175" width="500" height="20" forecolor="#666666"/>
+                <textElement><font size="10"/></textElement>
+                <textFieldExpression><![CDATA["Operador de Caja: " + $F{sec_nom} + " " + $F{sec_ape}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

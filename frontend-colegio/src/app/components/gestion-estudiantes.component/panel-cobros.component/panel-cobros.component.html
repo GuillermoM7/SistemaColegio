@@ -1,0 +1,122 @@
+<div class="container-fluid mt-2 animate-fade-in">
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-pizarra text-white py-3 border-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">
+                <i class="fas fa-wallet text-esmeralda me-2"></i>Panel de Caja y Cobros
+            </h5>
+            <button class="btn btn-sm btn-outline-light fw-bold px-3" (click)="onVolver.emit()">
+                <i class="fas fa-arrow-left me-2"></i>Volver al Expediente
+            </button>
+        </div>
+        <div class="card-body bg-gris-claro">
+            <h5 class="fw-bold text-dark mb-1">{{ estudiante.nombres }} {{ estudiante.apellidos }}</h5>
+            <p class="text-muted mb-0">ID: #{{ estudiante.idEstudiante }} | Estado: <span class="fw-bold" [ngClass]="{'text-esmeralda': estudiante.estado === 'Activo'}">{{ estudiante.estado }}</span></p>
+        </div>
+    </div>
+
+    <!-- Alertas -->
+    <div *ngIf="mensajeExito" class="alert alert-success shadow-sm border-success animate-fade-in fw-bold">
+        <i class="fas fa-check-circle me-2 fa-lg"></i>{{ mensajeExito }}
+    </div>
+    <div *ngIf="mensajeError" class="alert alert-danger shadow-sm border-danger animate-fade-in">
+        <i class="fas fa-exclamation-triangle me-2"></i>{{ mensajeError }}
+    </div>
+
+    <div class="row g-4">
+        <!-- Columna Izquierda -->
+        <div class="col-lg-6">
+            <div class="card card-tabla border-0 h-100">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold text-secondary mb-0"><i class="fas fa-history me-2"></i>Historial de Pagos</h5>
+                        <button class="btn btn-primary fw-bold shadow-sm" [disabled]="cargosPendientes.length > 0" (click)="imprimirSolvencia()">
+                            <i class="fas fa-certificate me-2"></i>Generar Solvencia
+                        </button>
+                    </div>
+                    
+                    <div class="alert alert-info border-0 shadow-sm mb-3" *ngIf="cargosPendientes.length > 0">
+                        <i class="fas fa-info-circle me-2"></i>La solvencia está bloqueada hasta liquidar los cargos pendientes.
+                    </div>
+                    
+                    <div class="table-responsive flex-grow-1" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-hover align-middle mb-0" style="font-size: 0.9rem;">
+                            <thead class="table-header-esmeralda" style="position: sticky; top: 0; background: white; z-index: 1;">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th class="text-end">Monto</th>
+                                    <th class="text-center">Recibo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="historialPagos.length === 0">
+                                    <td colspan="4" class="text-center py-4 text-muted">
+                                        No hay pagos registrados aún.
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let p of historialPagos">
+                                    <td class="text-muted">{{ p.fechaPago }}</td>
+                                    <td class="fw-semibold text-dark">{{ p.descripcion }}</td>
+                                    <td class="text-end fw-bold">Q{{ p.monto | number:'1.2-2' }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-secondary shadow-sm" title="Imprimir Recibo" (click)="imprimirFactura(p)">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha -->
+        <div class="col-lg-6">
+            <div class="card card-tabla border-0 h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold text-secondary mb-4"><i class="fas fa-hand-holding-usd me-2 text-danger"></i>Cuentas por Cobrar (Deuda)</h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-header-esmeralda">
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Detalle</th>
+                                    <th class="text-end">Monto (Q)</th>
+                                    <th class="text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="cargosPendientes.length === 0">
+                                    <td colspan="4" class="text-center py-5 text-muted">
+                                        <i class="fas fa-check-circle fa-2x text-esmeralda mb-2 d-block"></i>
+                                        El estudiante está solvente al día de hoy.
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let c of cargosPendientes">
+                                    <td class="fw-semibold text-dark">{{ c.concepto }}</td>
+                                    <td>
+                                        <span class="badge bg-light border text-secondary" *ngIf="c.mesReferencia">
+                                            {{ obtenerNombreMes(c.mesReferencia) }}
+                                        </span>
+                                        <span class="badge bg-light border text-secondary" *ngIf="!c.mesReferencia">Único</span>
+                                    </td>
+                                    <td class="text-end fw-bold text-danger">Q{{ c.montoCobrado | number:'1.2-2' }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-esmeralda btn-sm fw-bold px-3 shadow-sm" 
+                                                (click)="cobrar(c)" 
+                                                [disabled]="procesandoId !== 0">
+                                            <i class="fas" [ngClass]="procesandoId === c.idCargo ? 'fa-spinner fa-spin' : 'fa-cash-register'"></i>
+                                            {{ procesandoId === c.idCargo ? ' Procesando...' : ' Cobrar' }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

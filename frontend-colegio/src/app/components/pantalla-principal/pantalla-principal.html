@@ -76,8 +76,14 @@
 
         <!-- Secretaria -->
         <li class="nav-item" *ngIf="idRolUsuario === 3">
-          <a class="nav-link" routerLink="./mis-cursos">
-            <i class="fas fa-chalkboard-teacher me-1"></i> Inscripcion
+          <a class="nav-link" routerLink="./secretaria/gestion-estudiantes">
+            <i class="fas fa-chalkboard-teacher me-1"></i> Gestion de Estudiantes
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="idRolUsuario === 3">
+          <a class="nav-link" routerLink="./secretaria/inscripcion">
+            <i class="fas fa-chalkboard-teacher me-1"></i> Inscripciones
           </a>
         </li>
 
