@@ -1,8 +1,12 @@
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\ActividadDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\AlumnoNominaDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\AsignacionDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\AsistenciaDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CargoDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CrearCurriculoDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CrearSeccionDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CredencialesDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CursoAsignadoDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\CursoDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\EstudianteDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\ExpedienteAcademicoDTO.java
@@ -10,6 +14,8 @@ C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\ma
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\InscripcionDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\ListadoAlumnoDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\ListadoEmpleadoDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\NotaActividadDTO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\NotaExamenDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\PaginaAlumnosDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\PaginaCursosDTO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\dto\PaginaEmpleadosDTO.java
@@ -29,6 +35,7 @@ C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\ma
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\DirectorAlumnoController.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\DirectorPersonalController.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\GestionPersonal.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\MaestroController.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\SecretariaCobroController.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\SecretariaEstudianteController.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\apirestapp\recursos\SecretariaInscripcionController.java
@@ -39,6 +46,7 @@ C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\ma
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\EmpleadoDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\EstudianteDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\GradoDAO.java
+C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\MaestroDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\NivelDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\SecretariaCobroDAO.java
 C:\Users\arcan\Documents\NetBeansProjects\SistemaColegio\Proyecto2Backend\src\main\java\com\cunoc\colegio\database\daos\SecretariaEstudianteDAO.java

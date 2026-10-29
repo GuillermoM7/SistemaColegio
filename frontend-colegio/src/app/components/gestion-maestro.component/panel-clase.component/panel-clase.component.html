@@ -1,0 +1,112 @@
+<div class="container-fluid mt-2 animate-fade-in">
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-pizarra text-white py-3 border-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">
+                <i class="fas fa-chalkboard text-esmeralda me-2"></i> {{ cursoActual.nombreCurso }}
+            </h5>
+            <button class="btn btn-sm btn-outline-light fw-bold px-3" (click)="onVolver.emit()">
+                <i class="fas fa-arrow-left me-2"></i>Volver al catalogo de cursos
+            </button>
+        </div>
+        <div class="card-body bg-gris-claro d-flex justify-content-between align-items-center">
+            <div>
+                <h6 class="fw-bold text-dark mb-1">{{ cursoActual.nombreGrado }} - Sección "{{ cursoActual.nombreSeccion }}"</h6>
+                <p class="text-muted mb-0">ID Asignación: #{{ cursoActual.idAsignacion }}</p>
+            </div>
+            <span class="badge bg-primary fs-6">{{ nominaAlumnos.length }} Alumnos Inscritos</span>
+        </div>
+    </div>
+    <ul class="nav nav-pills nav-fill bg-white shadow-sm rounded p-1 mb-4 border">
+        <li class="nav-item">
+            <a class="nav-link fw-bold" style="cursor: pointer;"
+            [ngClass]="pestanaActiva === 'nomina' ? 'active bg-pizarra text-white' : 'text-secondary'"
+            (click)="cambiarPestana('nomina')">
+                <i class="fas fa-users me-2"></i>Nómina Estudiantil
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-bold" style="cursor: pointer;"
+            [ngClass]="pestanaActiva === 'asistencia' ? 'active bg-pizarra text-white' : 'text-secondary'"
+            (click)="cambiarPestana('asistencia')">
+                <i class="fas fa-calendar-check me-2"></i>Control de Asistencia
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-bold" style="cursor: pointer;"
+            [ngClass]="pestanaActiva === 'notas' ? 'active bg-pizarra text-white' : 'text-secondary'"
+            (click)="cambiarPestana('notas')">
+                <i class="fas fa-edit me-2"></i>Gestión de Notas
+            </a>
+        </li>
+    </ul>
+
+<!-- Pestaña 1 -->
+    <div class="card card-tabla border-0" *ngIf="pestanaActiva === 'nomina'">
+        <div class="table-responsive" *ngIf="!cargando">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-header-esmeralda">
+                    <tr>
+                        <th class="text-center" style="width: 5%">No.</th>
+                        <th style="width: 15%">ID</th>
+                        <th style="width: 25%">Apellidos</th>
+                        <th style="width: 25%">Nombres</th>
+                        <th class="text-center" style="width: 10%">Zona</th>
+                        <th class="text-center" style="width: 10%">Ex. Final</th>
+                        <th class="text-center" style="width: 10%">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="nominaAlumnos.length === 0">
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="fas fa-user-slash fa-2x mb-2 d-block"></i>
+                            No hay alumnos inscritos en esta sección.
+                        </td>
+                    </tr>
+                    <tr *ngFor="let alumno of nominaPaginada; let i = index">
+                        <td class="text-center fw-bold text-muted">
+                            {{ (paginaActual - 1) * itemsPorPagina + i + 1 }}
+                        </td>
+                        <td class="fw-semibold text-secondary">#{{ alumno.idEstudiante }}</td>
+                        <td class="fw-bold text-dark">{{ alumno.apellidos }}</td>
+                        <td class="text-dark">{{ alumno.nombres }}</td>
+                        <td class="text-center">{{ alumno.zona !== null ? alumno.zona : '-' }}</td>
+                        <td class="text-center">{{ alumno.examenFinal !== null ? alumno.examenFinal : '-' }}</td>
+                        
+                        <td class="text-center fw-bold">
+                            <span class="badge" 
+                                    [ngClass]="{
+                                        'bg-secondary': alumno.notaTotal === null,
+                                        'bg-danger': alumno.notaTotal !== null && alumno.notaTotal < 60,
+                                        'bg-success': alumno.notaTotal !== null && alumno.notaTotal >= 60
+                                    }">
+                                {{ alumno.notaTotal !== null ? alumno.notaTotal : 'Pendiente' }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <app-paginacion 
+            *ngIf="nominaAlumnos.length > 0 && !cargando"
+            [paginaActual]="paginaActual" 
+            [totalPaginas]="totalPaginas" 
+            [totalRegistros]="nominaAlumnos.length"
+            (cambioPagina)="onCambioPagina($event)">
+        </app-paginacion>
+    </div> 
+
+<!-- Pestaña 2 -->   
+    <app-asistencia-clase 
+        *ngIf="pestanaActiva === 'asistencia'"
+        [cursoActual]="cursoActual"
+        [nominaCompleta]="nominaAlumnos"> 
+    </app-asistencia-clase>
+
+<!-- Pestaña 3 -->
+    <app-notas-clase 
+        *ngIf="pestanaActiva === 'notas'"
+        [cursoActual]="cursoActual"
+        [nominaCompleta]="nominaAlumnos">
+    </app-notas-clase>
+</div>
