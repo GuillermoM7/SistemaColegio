@@ -1,0 +1,69 @@
+<div class="container-fluid mt-4 animate-fade-in" *ngIf="!prestamoEnDevolucion">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group shadow-sm">
+                <span class="input-group-text bg-white border-end-0 text-primary"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control border-start-0 py-2 fw-bold text-secondary" 
+                    placeholder="Ingrese nombre para buscar usuario..." 
+                    [(ngModel)]="terminoBusqueda" (keyup)="buscarUsuario()">
+            </div>
+            <div class="list-group position-absolute w-50 shadow" style="z-index: 1000;" *ngIf="usuariosEncontrados.length > 0">
+                <button *ngFor="let u of usuariosEncontrados" class="list-group-item list-group-item-action fw-bold" (click)="seleccionarUsuario(u)">
+                    {{ u.nombreCompleto }} <span class="badge bg-secondary ms-2">{{ u.tipoUsuario }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-tabla border-0" *ngIf="usuarioSeleccionado">
+        <div class="card-header bg-pizarra text-white fw-bold py-3">
+            <i class="fas fa-user me-2 text-esmeralda"></i>Préstamos de: {{ usuarioSeleccionado.nombreCompleto }}
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-header-esmeralda">
+                    <tr>
+                        <th>ID Préstamo</th>
+                        <th>Libro</th>
+                        <th>Fecha Préstamo</th>
+                        <th>Fecha Esperada</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="prestamosUsuario.length === 0">
+                        <td colspan="5" class="text-center py-4 fw-bold text-success">
+                            <i class="fas fa-check-circle me-2"></i>Absuelto de préstamos
+                        </td>
+                    </tr>
+                    <tr *ngFor="let p of prestamosPaginados">
+                        <td class="fw-bold text-muted">#{{ p.idPrestamo }}</td>
+                        <td class="fw-bold text-dark">{{ p.tituloLibro }}</td>
+                        <td>{{ p.fechaPrestamo }}</td>
+                        <td class="fw-bold text-danger">{{ p.fechaEsperada }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-esmeralda fw-bold" (click)="abrirDevolucion(p)">
+                                <i class="fas fa-undo-alt me-1"></i>Devolver
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <app-paginacion 
+            *ngIf="prestamosUsuario.length > 0"
+            [paginaActual]="paginaActual" 
+            [totalPaginas]="totalPaginas" 
+            [totalRegistros]="prestamosUsuario.length"
+            (cambioPagina)="onCambioPagina($event)">
+        </app-paginacion>
+        
+    </div>
+</div>
+
+<app-formulario-devolucion 
+    *ngIf="prestamoEnDevolucion" 
+    [prestamo]="prestamoEnDevolucion" 
+    (onCerrar)="cerrarFormulario($event)">
+</app-formulario-devolucion>

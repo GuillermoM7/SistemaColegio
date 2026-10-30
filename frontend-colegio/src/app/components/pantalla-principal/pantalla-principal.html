@@ -96,15 +96,28 @@
 
         <!-- Estudiante -->
         <li class="nav-item" *ngIf="idRolUsuario === 5 || idRolUsuario === 4 ">
-          <a class="nav-link" routerLink="./biblioteca">
+          <a class="nav-link" routerLink="./catalogo/biblioteca">
             <i class="fas fa-book me-1"></i> Biblioteca
           </a>
         </li>
 
         <!-- Bibliotecario -->
         <li class="nav-item" *ngIf="idRolUsuario === 6 ">
-          <a class="nav-link" routerLink="./biblioteca">
+          <a class="nav-link" routerLink="./biblioteca/gestion">
             <i class="fas fa-book me-1"></i> Gestion de biblioteca
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="idRolUsuario === 6 ">
+          <a class="nav-link" routerLink="./biblioteca/prestamos">
+            <i class="fas fa-book me-1"></i> Prestamos
+          </a>
+        </li>
+
+        
+        <li class="nav-item" *ngIf="idRolUsuario === 6 ">
+          <a class="nav-link" routerLink="./biblioteca/devoluciones">
+            <i class="fas fa-book me-1"></i> Devoluciones
           </a>
         </li>
 

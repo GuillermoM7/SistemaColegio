@@ -1,0 +1,42 @@
+<div class="card border-0 shadow-sm animate-fade-in">
+    <div class="card-header bg-info text-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">
+            <i class="fas fa-users me-2"></i>Préstamos Activos: {{ libro.titulo }}
+        </h5>
+        <button class="btn btn-sm btn-outline-light fw-bold" (click)="onVolver.emit()">
+            <i class="fas fa-arrow-left me-2"></i>Volver a Libros
+        </button>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive" *ngIf="!cargando">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light text-secondary">
+                    <tr>
+                        <th style="width: 10%">ID</th>
+                        <th style="width: 35%">Usuario</th>
+                        <th style="width: 25%">Correo</th>
+                        <th class="text-center" style="width: 15%">Fecha Préstamo</th>
+                        <th class="text-center" style="width: 15%">Fecha Esperada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="prestamos.length === 0">
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="fas fa-check-circle fa-2x mb-2 d-block text-success"></i> No hay préstamos activos para este libro.
+                        </td>
+                    </tr>
+                    <tr *ngFor="let p of prestamos">
+                        <td class="fw-bold text-muted">#{{ p.idPrestamo }}</td>
+                        <td class="fw-bold text-dark">{{ p.nombreCompleto }}</td>
+                        <td class="text-primary">{{ p.correo }}</td>
+                        <td class="text-center text-muted">{{ p.fechaPrestamo | date:'dd/MM/yyyy' }}</td>
+                        <td class="text-center fw-bold text-danger">{{ p.fechaEsperada | date:'dd/MM/yyyy' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center py-5" *ngIf="cargando">
+            <i class="fas fa-spinner fa-spin fa-2x text-secondary"></i>
+        </div>
+    </div>
+</div>

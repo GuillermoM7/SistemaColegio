@@ -1,0 +1,83 @@
+<div class="container-fluid mt-4 animate-fade-in">   
+    <div *ngIf="vistaActiva === 'tabla'">
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-12">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0 text-primary">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0 py-2 fw-bold text-secondary" 
+                        placeholder="Buscar libro para prestar (por título o autor)..." 
+                        [(ngModel)]="terminoBusqueda" (keyup)="filtrarLibros()">
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-tabla border-0 shadow-sm">
+            <div class="table-responsive" *ngIf="!cargando">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-header-esmeralda">
+                        <tr>
+                            <th style="width: 40%">Título</th>
+                            <th style="width: 25%">Autor</th>
+                            <th class="text-center" style="width: 15%">Disponibles</th>
+                            <th class="text-center" style="width: 20%">Acciones de Préstamo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="librosFiltrados.length === 0">
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <i class="fas fa-book fa-2x mb-2 d-block"></i> No se encontraron libros.
+                            </td>
+                        </tr>
+                        <tr *ngFor="let libro of librosPaginados">
+                            <td class="fw-bold text-dark">{{ libro.titulo }}</td>
+                            <td class="text-secondary fw-semibold">{{ libro.autor }}</td>
+                            <td class="text-center">
+                                <span class="badge fs-6" [ngClass]="libro.cantidadDisponible > 0 ? 'bg-success' : 'bg-danger'">
+                                    {{ libro.cantidadDisponible }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <!-- Botón prestamos -->
+                                <button class="btn btn-sm btn-outline-info me-2 shadow-sm fw-bold" 
+                                        (click)="abrirListaPrestamos(libro)" title="Ver Préstamos Activos">
+                                    <i class="fas fa-users me-1"></i>Préstamos
+                                </button>
+                                
+                                <!-- Botón asiganar prestamo) -->
+                                <button class="btn btn-sm btn-primary shadow-sm fw-bold" 
+                                        (click)="abrirFormularioPrestamo(libro)" 
+                                        [disabled]="libro.cantidadDisponible < 1"
+                                        title="Prestar Libro">
+                                    <i class="fas fa-hand-holding-usd me-1"></i>Prestar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <app-paginacion 
+                *ngIf="librosFiltrados.length > 0 && !cargando"
+                [paginaActual]="paginaActual" 
+                [totalPaginas]="totalPaginas" 
+                [totalRegistros]="librosFiltrados.length"
+                (cambioPagina)="onCambioPagina($event)">
+            </app-paginacion>
+        </div>
+    </div>
+
+    <app-lista-prestamos 
+        *ngIf="vistaActiva === 'lista-prestamos'"
+        [libro]="libroSeleccionado"
+        (onVolver)="cerrarVistasHijas()">
+    </app-lista-prestamos>
+
+    <app-formulario-prestamo 
+        *ngIf="vistaActiva === 'formulario-prestamo'"
+        [libro]="libroSeleccionado"
+        (onCerrar)="cerrarVistasHijas($event)">
+    </app-formulario-prestamo>
+
+</div>

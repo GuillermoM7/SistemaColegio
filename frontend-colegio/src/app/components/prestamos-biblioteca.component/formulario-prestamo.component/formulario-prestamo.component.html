@@ -1,0 +1,79 @@
+<div class="card border-0 shadow-sm animate-fade-in">
+    <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">
+            <i class="fas fa-hand-holding-usd me-2"></i>Prestar: {{ libro.titulo }}
+        </h5>
+        <button class="btn btn-sm btn-outline-light fw-bold" (click)="onCerrar.emit(false)">
+            <i class="fas fa-times me-2"></i>Cancelar
+        </button>
+    </div>
+    
+    <div class="card-body p-4 bg-light">
+        <div class="row g-4">
+            <!-- Panel Izquierdo -->
+            <div class="col-md-5 border-end">
+                <label class="form-label fw-bold text-secondary">1. Buscar Estudiante / Empleado</label>
+                <div class="input-group mb-3 shadow-sm">
+                    <span class="input-group-text bg-white text-primary border-end-0"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control border-start-0" 
+                        placeholder="Escriba nombre o correo..." 
+                        [(ngModel)]="terminoBusqueda" 
+                        (keyup)="buscarUsuario()">
+                </div>
+                
+                <div class="text-center py-3" *ngIf="buscando">
+                    <i class="fas fa-spinner fa-spin text-primary"></i> Buscando...
+                </div>
+
+                <div class="list-group shadow-sm" *ngIf="usuariosEncontrados.length > 0">
+                    <button *ngFor="let u of usuariosEncontrados" 
+                            class="list-group-item list-group-item-action py-3"
+                            (click)="seleccionarUsuario(u)">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold text-dark">{{ u.nombreCompleto }}</span>
+                            <span class="badge" [ngClass]="u.tipoUsuario === 'Estudiante' ? 'bg-esmeralda' : 'bg-secondary'">{{ u.tipoUsuario }}</span>
+                        </div>
+                        <small class="text-muted"><i class="fas fa-envelope me-1"></i>{{ u.correo }}</small>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel derecho -->
+            <div class="col-md-7">
+                <label class="form-label fw-bold text-secondary">2. Detalles del Préstamo</label>
+                
+                <!-- Antes de seleccionar -->
+                <div class="text-center text-muted p-5 border border-dashed rounded bg-white" *ngIf="!usuarioSeleccionado">
+                    <i class="fas fa-user-circle fa-3x mb-3 text-secondary opacity-50"></i>
+                    <h6>Seleccione un usuario de la lista izquierda</h6>
+                </div>
+
+                <!-- Formulario con seleccion -->
+                <div *ngIf="usuarioSeleccionado" class="animate-fade-in bg-white p-4 rounded shadow-sm border">
+                    <div class="d-flex justify-content-between align-items-start mb-4 pb-3 border-bottom">
+                        <div>
+                            <h5 class="fw-bold text-primary mb-1">{{ usuarioSeleccionado.nombreCompleto }}</h5>
+                            <p class="text-muted mb-0">{{ usuarioSeleccionado.correo }}</p>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger" (click)="usuarioSeleccionado = null">
+                            <i class="fas fa-sync-alt me-1"></i>Cambiar
+                        </button>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark">Fecha Esperada de Devolución:</label>
+                        <input type="date" class="form-control form-control-lg border-primary fw-bold text-primary shadow-sm" 
+                            [(ngModel)]="fechaEsperada">
+                    </div>
+
+                    <button class="btn btn-primary btn-lg w-100 fw-bold shadow" 
+                            (click)="guardarPrestamo()" 
+                            [disabled]="guardando || !fechaEsperada">
+                        <span *ngIf="!guardando"><i class="fas fa-check-double me-2"></i>Confirmar y Guardar Préstamo</span>
+                        <span *ngIf="guardando"><i class="fas fa-spinner fa-spin me-2"></i>Guardando Transacción...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

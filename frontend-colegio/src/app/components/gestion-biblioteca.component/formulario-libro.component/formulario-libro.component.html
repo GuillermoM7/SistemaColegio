@@ -1,0 +1,50 @@
+<div class="card border-0 shadow-sm animate-fade-in max-w-75 mx-auto mt-4">
+    <div class="card-header bg-pizarra text-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">
+            <i class="fas" [ngClass]="esEdicion ? 'fa-edit' : 'fa-book-medical'"></i> 
+            {{ esEdicion ? 'Editar Información del Libro' : 'Registrar Nuevo Libro' }}
+        </h5>
+        <button class="btn btn-sm btn-outline-light" (click)="onCerrar.emit(false)">
+            <i class="fas fa-times me-2"></i>Cancelar
+        </button>
+    </div>
+    
+    <div class="card-body p-4 bg-light">
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label class="form-label fw-bold text-muted small">Título del Libro</label>
+                <input type="text" class="form-control fw-bold border-primary shadow-sm" [(ngModel)]="libroForm.titulo">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-muted small">Autor</label>
+                <input type="text" class="form-control border-primary shadow-sm" [(ngModel)]="libroForm.autor">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-muted small">Editorial</label>
+                <input type="text" class="form-control border-primary shadow-sm" [(ngModel)]="libroForm.editorial">
+            </div>
+            <div class="col-md-12 mt-4">
+                <label class="form-label fw-bold text-muted small">Cantidad Total Físicos (Inventario)</label>
+                
+                <!-- El input se bloquea si hay prestamos pendientes -->
+                <input type="number" class="form-control fw-bold border-primary shadow-sm text-center" 
+                        style="max-width: 150px;" min="1"
+                        [(ngModel)]="libroForm.cantidadTotal"
+                        [disabled]="!permiteEditarCantidad">
+                <small class="text-danger fw-bold d-block mt-1" *ngIf="!permiteEditarCantidad">
+                    <i class="fas fa-lock me-1"></i>No se puede modificar la cantidad porque actualmente hay copias prestadas a usuarios.
+                </small>
+            </div>
+        </div>
+
+        <hr class="my-4">
+        
+        <div class="text-end">
+            <button class="btn btn-esmeralda btn-lg fw-bold shadow px-5" (click)="guardar()" 
+                    [disabled]="guardando || !libroForm.titulo || !libroForm.autor || !libroForm.editorial || libroForm.cantidadTotal < 1">
+                <span *ngIf="!guardando"><i class="fas fa-save me-2"></i>Guardar Libro</span>
+                <span *ngIf="guardando"><i class="fas fa-spinner fa-spin me-2"></i>Procesando...</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,10 @@ import { GradosSeccionesComponent } from './components/grados-secciones.componen
 import { GestionEstudiantesComponent } from './components/gestion-estudiantes.component/gestion-estudiantes.component';
 import { RealizarInscripcionComponent } from './components/realizar-inscripcion.component/realizar-inscripcion.component';
 import { GestionMaestroComponent } from './components/gestion-maestro.component/gestion-maestro.component';
+import { GestionBibliotecaComponent } from './components/gestion-biblioteca.component/gestion-biblioteca.component';
+import { PrestamosBibliotecaComponent } from './components/prestamos-biblioteca.component/prestamos-biblioteca.component';
+import { DevolucionesComponent } from './components/devoluciones.component/devoluciones.component';
+import { CatalogoBibliotecaComponent } from './components/catalogo-biblioteca.component/catalogo-biblioteca.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,8 +29,12 @@ export const routes: Routes = [
       {path: 'director/cursos', component: DirectorCursosComponent, canActivate: [rolGuard], data: { roles: [2] } },
       {path: 'director/grados/secciones', component: GradosSeccionesComponent, canActivate: [rolGuard], data: { roles: [2] } },
       {path: 'secretaria/gestion-estudiantes', component: GestionEstudiantesComponent, canActivate: [rolGuard], data: { roles: [3] } },
-      {path: 'secretaria/inscripcion', component: RealizarInscripcionComponent, canActivate: [rolGuard], data: { roles: [3] }},
-      {path: 'cursos/maestro', component: GestionMaestroComponent, canActivate: [rolGuard], data: { roles: [4] }},
+      {path: 'secretaria/inscripcion', component: RealizarInscripcionComponent, canActivate: [rolGuard], data: { roles: [3] } },
+      {path: 'cursos/maestro', component: GestionMaestroComponent, canActivate: [rolGuard], data: { roles: [4] } },
+      {path: 'biblioteca/gestion', component: GestionBibliotecaComponent, canActivate: [rolGuard], data: { roles: [6] } },
+      {path: 'biblioteca/prestamos', component: PrestamosBibliotecaComponent, canActivate: [rolGuard], data: { roles: [6] } },
+      {path: 'biblioteca/devoluciones', component: DevolucionesComponent, canActivate: [rolGuard], data: { roles: [6] } },
+      {path: 'catalogo/biblioteca', component: CatalogoBibliotecaComponent, canActivate: [rolGuard], data: { roles: [4,5] } }
   ]
   }
 ];

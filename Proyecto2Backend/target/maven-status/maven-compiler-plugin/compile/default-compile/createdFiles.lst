@@ -1,4 +1,5 @@
 com\cunoc\colegio\apirestapp\dto\CargoDTO.class
+com\cunoc\colegio\apirestapp\dto\ReporteMoraDTO.class
 com\cunoc\colegio\database\entidades\Seccion.class
 com\cunoc\colegio\database\daos\EstudianteDAO.class
 com\cunoc\colegio\database\DBConnectionSingleton.class
@@ -10,6 +11,7 @@ com\cunoc\colegio\apirestapp\dto\AsistenciaDTO.class
 com\cunoc\colegio\apirestapp\dto\RespuestaGradoDTO.class
 com\cunoc\colegio\database\daos\AnioLectivoDAO.class
 com\cunoc\colegio\database\entidades\Multa.class
+com\cunoc\colegio\apirestapp\dto\MultaUsuarioDTO.class
 com\cunoc\colegio\database\entidades\CurriculoCurso.class
 com\cunoc\colegio\database\entidades\Empleado.class
 com\cunoc\colegio\apirestapp\recursos\SecretariaEstudianteController.class
@@ -19,7 +21,9 @@ com\cunoc\colegio\database\entidades\Curriculo.class
 com\cunoc\colegio\database\entidades\Estado.class
 com\cunoc\colegio\apirestapp\recursos\AcademicoController.class
 com\cunoc\colegio\apirestapp\dto\CursoAsignadoDTO.class
+com\cunoc\colegio\apirestapp\dto\LibroDTO.class
 com\cunoc\colegio\apirestapp\recursos\CursoController.class
+com\cunoc\colegio\apirestapp\dto\UsuarioBusquedaDTO.class
 com\cunoc\colegio\database\daos\SecretariaInscripcionDAO.class
 com\cunoc\colegio\apirestapp\recursos\MaestroController.class
 com\cunoc\colegio\database\daos\SecretariaCobroDAO.class
@@ -40,6 +44,7 @@ com\cunoc\colegio\apirestapp\dto\ListadoEmpleadoDTO.class
 com\cunoc\colegio\apirestapp\dto\CrearSeccionDTO.class
 com\cunoc\colegio\apirestapp\recursos\AnioLectivoController.class
 com\cunoc\colegio\apirestapp\recursos\DirectorAlumnoController.class
+com\cunoc\colegio\database\daos\BibliotecaDAO.class
 com\cunoc\colegio\database\daos\CarreraDAO.class
 com\cunoc\colegio\apirestapp\JakartaRestConfiguration.class
 com\cunoc\colegio\apirestapp\dto\EstudianteDTO.class
@@ -55,8 +60,10 @@ com\cunoc\colegio\database\entidades\Curso.class
 com\cunoc\colegio\apirestapp\dto\AsignacionDTO.class
 com\cunoc\colegio\apirestapp\dto\RespuestaLoginDTO.class
 com\cunoc\colegio\apirestapp\dto\ExpedienteAcademicoDTO.class
+com\cunoc\colegio\apirestapp\recursos\BibliotecaController.class
 com\cunoc\colegio\database\daos\MaestroDAO.class
 com\cunoc\colegio\database\entidades\AnioLectivo.class
+com\cunoc\colegio\apirestapp\dto\PrestamoInfoDTO.class
 com\cunoc\colegio\apirestapp\recursos\Autenticacion.class
 com\cunoc\colegio\apirestapp\recursos\DirectorAcademicoController.class
 com\cunoc\colegio\apirestapp\recursos\DirectorPersonalController.class
@@ -74,4 +81,5 @@ com\cunoc\colegio\database\entidades\Concepto.class
 com\cunoc\colegio\database\entidades\Inscripcion.class
 com\cunoc\colegio\apirestapp\dto\ListadoAlumnoDTO.class
 com\cunoc\colegio\apirestapp\dto\NotaActividadDTO.class
+com\cunoc\colegio\apirestapp\dto\PrestamoUsuarioDTO.class
 com\cunoc\colegio\database\daos\UsuarioDAO.class
