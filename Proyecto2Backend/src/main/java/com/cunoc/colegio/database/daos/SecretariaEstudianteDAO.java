@@ -133,4 +133,26 @@ public class SecretariaEstudianteDAO {
         }
         return historial;
     }
+    
+    
+    public EstudianteDTO obtenerEstudiantePorUsuario(int idUsuario) {
+        String sql = "SELECT id_estudiante, nombres, apellidos, estado FROM estudiante WHERE id_usuario = ?";
+        try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    EstudianteDTO dto = new EstudianteDTO();
+                    dto.setIdEstudiante(rs.getInt("id_estudiante"));
+                    dto.setNombres(rs.getString("nombres"));
+                    dto.setApellidos(rs.getString("apellidos"));
+                    dto.setEstado(rs.getString("estado"));
+                    return dto;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener estudiante por id_usuario: " + e.getMessage());
+        }
+        return null;
+    }
 }

@@ -1,0 +1,71 @@
+<div class="container-fluid mt-4 animate-fade-in">
+    <!-- Pantalla de Carga -->
+    <div class="text-center py-5 mt-5" *ngIf="cargando">
+        <i class="fas fa-spinner fa-spin fa-3x text-esmeralda mb-3"></i>
+        <h5 class="text-muted fw-bold">Cargando credenciales...</h5>
+    </div>
+
+    <!-- Mensaje de Error (Sin inscripción) -->
+    <div class="alert alert-warning shadow-sm border-0" *ngIf="errorMensaje && !cargando">
+        <i class="fas fa-exclamation-circle me-2"></i> {{ errorMensaje }}
+    </div>
+
+    <!-- Tarjeta de Perfil -->
+    <div class="row justify-content-center" *ngIf="perfil && !cargando">
+        <div class="col-md-10">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-pizarra text-white py-3 border-0">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="fas fa-id-card text-esmeralda me-2"></i>Mi Perfil Académico
+                    </h5>
+                </div>
+                
+                <div class="card-body bg-gris-claro p-5">
+                    <div class="row g-4">
+                        <!-- Columna de Datos Personales -->
+                        <div class="col-md-6 border-end pe-4">
+                            <h6 class="fw-bold text-secondary text-uppercase mb-4">
+                                <i class="fas fa-user me-2 text-primary"></i>Información Personal
+                            </h6>
+                            
+                            <div class="mb-3">
+                                <label class="text-muted small fw-bold">Nombres</label>
+                                <p class="fs-5 fw-bold text-dark mb-0">{{ perfil.nombres }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-muted small fw-bold">Apellidos</label>
+                                <p class="fs-5 fw-bold text-dark mb-0">{{ perfil.apellidos }}</p>
+                            </div>
+                            <div class="mb-0">
+                                <label class="text-muted small fw-bold">Correo Institucional</label>
+                                <p class="fs-6 text-primary fw-semibold mb-0">
+                                    <i class="fas fa-envelope me-1"></i>{{ perfil.correo }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Columna de Datos Académicos -->
+                        <div class="col-md-6 ps-4">
+                            <h6 class="fw-bold text-secondary text-uppercase mb-4">
+                                <i class="fas fa-graduation-cap me-2 text-esmeralda"></i>Asignación Actual (Ciclo {{ perfil.anioActual }})
+                            </h6>
+                            
+                            <div class="mb-3">
+                                <label class="text-muted small fw-bold">Nivel y Grado</label>
+                                <p class="fs-5 fw-bold text-dark mb-0">
+                                    {{ perfil.grado }} <span class="badge bg-secondary ms-2 fs-6">{{ perfil.nivelAcademico }}</span>
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-muted small fw-bold">Sección Asignada</label>
+                                <p class="fs-4 fw-bold text-esmeralda mb-0">
+                                    Sección "{{ perfil.seccion }}"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

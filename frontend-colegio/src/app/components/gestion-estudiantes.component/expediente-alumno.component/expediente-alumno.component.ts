@@ -12,6 +12,7 @@ import { SecretariaEstudianteService } from '../../../services/secretaria-estudi
 
 export class ExpedienteAlumnoComponent implements OnInit {
   @Input() estudiante: any;
+  @Input() esVistaEstudiante: boolean = false; 
   @Output() onVolver = new EventEmitter<void>();
 
   historialCursos: any[] = [];

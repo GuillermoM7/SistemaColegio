@@ -72,4 +72,15 @@ public class SecretariaEstudianteController {
         return Response.ok(dao.consultarExpedienteAcademico(idEstudiante)).build();
     }
     
+   
+    @GET
+    @Path("/usuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPorUsuario(@PathParam("idUsuario") int idUsuario) {
+        EstudianteDTO dto = dao.obtenerEstudiantePorUsuario(idUsuario);
+        if (dto != null) {
+            return Response.ok(dto).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }

@@ -5,6 +5,7 @@ com\cunoc\colegio\database\daos\EstudianteDAO.class
 com\cunoc\colegio\database\DBConnectionSingleton.class
 com\cunoc\colegio\apirestapp\dto\RegistroEmpleadoDTO.class
 com\cunoc\colegio\database\entidades\EstadoMulta.class
+com\cunoc\colegio\apirestapp\dto\EstadoCuentaResumenDTO.class
 com\cunoc\colegio\apirestapp\dto\CredencialesDTO.class
 com\cunoc\colegio\apirestapp\dto\RegistrarPagoDTO.class
 com\cunoc\colegio\apirestapp\dto\AsistenciaDTO.class
@@ -20,6 +21,7 @@ com\cunoc\colegio\database\entidades\Grado.class
 com\cunoc\colegio\database\entidades\Curriculo.class
 com\cunoc\colegio\database\entidades\Estado.class
 com\cunoc\colegio\apirestapp\recursos\AcademicoController.class
+com\cunoc\colegio\apirestapp\dto\PerfilEstudianteDTO.class
 com\cunoc\colegio\apirestapp\dto\CursoAsignadoDTO.class
 com\cunoc\colegio\apirestapp\dto\LibroDTO.class
 com\cunoc\colegio\apirestapp\recursos\CursoController.class
@@ -56,11 +58,13 @@ com\cunoc\colegio\database\daos\CursoDAO.class
 com\cunoc\colegio\apirestapp\dto\NotaExamenDTO.class
 com\cunoc\colegio\database\daos\DirectorAcademicoDAO.class
 com\cunoc\colegio\database\entidades\Rol.class
+com\cunoc\colegio\database\daos\EstudianteOperativoDAO.class
 com\cunoc\colegio\database\entidades\Curso.class
 com\cunoc\colegio\apirestapp\dto\AsignacionDTO.class
 com\cunoc\colegio\apirestapp\dto\RespuestaLoginDTO.class
 com\cunoc\colegio\apirestapp\dto\ExpedienteAcademicoDTO.class
 com\cunoc\colegio\apirestapp\recursos\BibliotecaController.class
+com\cunoc\colegio\apirestapp\recursos\EstudianteOperativoController.class
 com\cunoc\colegio\database\daos\MaestroDAO.class
 com\cunoc\colegio\database\entidades\AnioLectivo.class
 com\cunoc\colegio\apirestapp\dto\PrestamoInfoDTO.class
@@ -80,6 +84,7 @@ com\cunoc\colegio\database\daos\GradoDAO.class
 com\cunoc\colegio\database\entidades\Concepto.class
 com\cunoc\colegio\database\entidades\Inscripcion.class
 com\cunoc\colegio\apirestapp\dto\ListadoAlumnoDTO.class
+com\cunoc\colegio\apirestapp\dto\MovimientoFinancieroDTO.class
 com\cunoc\colegio\apirestapp\dto\NotaActividadDTO.class
 com\cunoc\colegio\apirestapp\dto\PrestamoUsuarioDTO.class
 com\cunoc\colegio\database\daos\UsuarioDAO.class

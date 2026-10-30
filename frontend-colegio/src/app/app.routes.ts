@@ -15,6 +15,9 @@ import { GestionBibliotecaComponent } from './components/gestion-biblioteca.comp
 import { PrestamosBibliotecaComponent } from './components/prestamos-biblioteca.component/prestamos-biblioteca.component';
 import { DevolucionesComponent } from './components/devoluciones.component/devoluciones.component';
 import { CatalogoBibliotecaComponent } from './components/catalogo-biblioteca.component/catalogo-biblioteca.component';
+import { MisNotasComponent } from './components/mis-notas.component/mis-notas.component';
+import { MiPerfilComponent } from './components/mi-perfil.component/mi-perfil.component';
+import { EstadoCuentaComponent } from './components/estado-cuenta.component/estado-cuenta.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -34,7 +37,10 @@ export const routes: Routes = [
       {path: 'biblioteca/gestion', component: GestionBibliotecaComponent, canActivate: [rolGuard], data: { roles: [6] } },
       {path: 'biblioteca/prestamos', component: PrestamosBibliotecaComponent, canActivate: [rolGuard], data: { roles: [6] } },
       {path: 'biblioteca/devoluciones', component: DevolucionesComponent, canActivate: [rolGuard], data: { roles: [6] } },
-      {path: 'catalogo/biblioteca', component: CatalogoBibliotecaComponent, canActivate: [rolGuard], data: { roles: [4,5] } }
+      {path: 'catalogo/biblioteca', component: CatalogoBibliotecaComponent, canActivate: [rolGuard], data: { roles: [4,5] } },
+      {path: 'notas', component: MisNotasComponent, canActivate: [rolGuard], data: { roles: [5] } },
+      {path: 'perfil', component: MiPerfilComponent, canActivate: [rolGuard], data: { roles: [5] } },
+      {path: 'estado/cuentas', component: EstadoCuentaComponent, canActivate: [rolGuard], data: { roles: [5] } }
   ]
   }
 ];

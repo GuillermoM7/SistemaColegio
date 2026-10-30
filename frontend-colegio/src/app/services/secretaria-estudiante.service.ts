@@ -36,4 +36,9 @@ export class SecretariaEstudianteService {
         return this.http.get<any[]>(`${this.apiUrl}/${idEstudiante}/expediente`);
     }
 
+
+    obtenerEstudiantePorUsuario(idUsuario: number): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/usuario/${idUsuario}`);
+    }
+    
 }
