@@ -6,11 +6,12 @@ import { SecretariaEstudianteService } from '../../services/secretaria-estudiant
 import { FormularioEstudianteComponent } from './formulario-estudiante.component/formulario-estudiante.component';
 import { PanelCobrosComponent } from './panel-cobros.component/panel-cobros.component';
 import { ExpedienteAlumnoComponent } from './expediente-alumno.component/expediente-alumno.component';
+import { PanelPagosVariosComponent } from './panel-pagos-varios.component/panel-pagos-varios.component';
 
 @Component({
   selector: 'app-gestion-estudiantes',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormularioEstudianteComponent, PanelCobrosComponent, ExpedienteAlumnoComponent],
+  imports: [CommonModule, FormsModule, FormularioEstudianteComponent, PanelCobrosComponent, ExpedienteAlumnoComponent, PanelPagosVariosComponent],
   templateUrl: './gestion-estudiantes.component.html'
 })
 
@@ -116,5 +117,11 @@ export class GestionEstudiantesComponent {
     this.vistaActual = 4;
     this.cdr.detectChanges();
   }  
+
+
+  abrirPagosVarios() {
+    this.vistaActual = 5;
+    this.cdr.detectChanges();
+  }
 
 }

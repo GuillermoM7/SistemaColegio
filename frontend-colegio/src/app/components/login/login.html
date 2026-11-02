@@ -1,38 +1,66 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-      <div class="card shadow-sm">
-        <div class="card-body p-4">
-          <h3 class="text-center mb-4">
-            <i class="fas fa-user-circle text-primary"></i> Iniciar Sesión
-          </h3>
-          
-          <form (ngSubmit)="ejecutarLogin()">          
-            <div class="mb-3">
-              <label class="form-label">Correo</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input type="text" class="form-control" name="usuario" [(ngModel)]="correo" required>
-              </div>
+<div class="login-wrapper">
+    <div class="login-card animate-fade-in">
+        <div class="login-header">
+            <div class="logo-circle">
+                <i class="fas fa-graduation-cap"></i>
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Contraseña</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                <input type="password" class="form-control" name="clave" [(ngModel)]="password" required>
-              </div>
-            </div>
-
-            <div class="d-grid mt-4">
-              <button type="submit" class="btn btn-primary">
-                Entrar <i class="bi bi-box-arrow-in-right ms-2"></i>
-              </button>
-            </div>
-            
-          </form>
+            <h2>Portal Educativo</h2>
+            <p *ngIf="vistaActiva === 0">Ingresa tus credenciales para continuar</p>
+            <p *ngIf="vistaActiva === 1">Recuperación de cuenta</p>
+            <p *ngIf="vistaActiva === 2">Crea tu nueva contraseña</p>
         </div>
-      </div>
+
+        <div class="login-body">
+            <!-- Mensajes -->
+            <div class="alert alert-error" *ngIf="mensajeError"><i class="fas fa-exclamation-circle"></i> {{ mensajeError }}</div>
+            <div class="alert alert-success" *ngIf="mensajeExito"><i class="fas fa-check-circle"></i> {{ mensajeExito }}</div>
+
+            <!-- Vista login -->
+            <form (ngSubmit)="ejecutarLogin()" *ngIf="vistaActiva === 0">
+                <div class="input-group">
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" name="correo" [(ngModel)]="correo" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
+                </div>
+                <button type="submit" class="btn-primary" [disabled]="procesando">
+                    <span *ngIf="!procesando">Iniciar Sesión</span>
+                    <i *ngIf="procesando" class="fas fa-spinner fa-spin"></i>
+                </button>
+                <a href="javascript:void(0)" class="link-action text-center d-block mt-3" (click)="cambiarVista(1)">¿Olvidaste tu contraseña?</a>
+            </form>
+
+            <!-- vista confirar correo -->
+            <form (ngSubmit)="verificarCorreo()" *ngIf="vistaActiva === 1">
+                <div class="input-group">
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" name="correoRecuperacion" [(ngModel)]="correoRecuperacion" placeholder="Tu correo registrado" required>
+                </div>
+                <button type="submit" class="btn-primary" [disabled]="procesando">
+                    <span *ngIf="!procesando">Verificar Correo</span>
+                    <i *ngIf="procesando" class="fas fa-spinner fa-spin"></i>
+                </button>
+                <a href="javascript:void(0)" class="link-action text-center d-block mt-3" (click)="cambiarVista(0)">Volver al Login</a>
+            </form>
+
+            <!-- vista cambio-->
+            <form (ngSubmit)="guardarNuevaPassword()" *ngIf="vistaActiva === 2">
+                <div class="input-group">
+                    <i class="fas fa-key icon"></i>
+                    <input type="password" name="nuevaPassword" [(ngModel)]="nuevaPassword" placeholder="Nueva Contraseña" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-check-double icon"></i>
+                    <input type="password" name="confirmarPassword" [(ngModel)]="confirmarPassword" placeholder="Confirmar Contraseña" required>
+                </div>
+                <button type="submit" class="btn-primary" [disabled]="procesando">
+                    <span *ngIf="!procesando">Actualizar Contraseña</span>
+                    <i *ngIf="procesando" class="fas fa-spinner fa-spin"></i>
+                </button>
+                <a href="javascript:void(0)" class="link-action text-center d-block mt-3" (click)="cambiarVista(0)">Cancelar</a>
+            </form>
+        </div>
     </div>
-  </div>
 </div>

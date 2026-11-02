@@ -29,4 +29,19 @@ export class SecretariaCobroService {
     descargarSolvenciaPdf(idEstudiante: number): Observable<Blob> {
         return this.http.get(`${this.apiUrl}/estudiantes/${idEstudiante}/solvencia`, { responseType: 'blob' });
     }
+
+
+    obtenerMultasPendientes(idEstudiante: number): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiUrl}/multas-pendientes/${idEstudiante}`);
+    }
+
+    
+    procesarPagoExtra(datos: any): Observable<any> {
+        return this.http.post(`${this.apiUrl}/pagar-extra`, datos);
+    }
+
+
+    procesarPagoMulta(datos: any): Observable<any> {
+        return this.http.post(`${this.apiUrl}/pagar-multa`, datos);
+    }
 }

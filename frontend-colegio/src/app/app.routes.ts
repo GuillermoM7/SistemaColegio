@@ -5,6 +5,7 @@ import { GestionPersonal } from './components/gestion-personal/gestion-personal'
 import { ConfiguracionGlobalComponent } from './components/configuracion-global/configuracion-global';
 import { DirectorPersonalComponent } from './components/director-personal.component/director-personal.component';
 import { rolGuard } from './services/rol.guard';
+import { InicioComponent } from './components/inicio.component/inicio.component';
 import { DirectorAlumnosComponent } from './components/director-alumnos.component/director-alumnos.component';
 import { DirectorCursosComponent } from './components/director-cursos.component/director-cursos.component';
 import { GradosSeccionesComponent } from './components/grados-secciones.component/grados-secciones.component';
@@ -18,6 +19,10 @@ import { CatalogoBibliotecaComponent } from './components/catalogo-biblioteca.co
 import { MisNotasComponent } from './components/mis-notas.component/mis-notas.component';
 import { MiPerfilComponent } from './components/mi-perfil.component/mi-perfil.component';
 import { EstadoCuentaComponent } from './components/estado-cuenta.component/estado-cuenta.component';
+import { ReporteSolvenciaComponent } from './components/reporte-solvencia.component/reporte-solvencia.component';
+import { HistorialPagosComponent } from './components/historial-pagos.component/historial-pagos.component';
+import { ReporteIngresosComponent } from './components/reporte-ingresos.component/reporte-ingresos.component';
+import { ReporteMoraComponent } from './components/reporte-mora.component/reporte-mora.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,6 +30,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'pantalla-principal', component: PantallaPrincipal,
     children: [
+      { path: '', component: InicioComponent },
       {path: 'gestion-empleados-administrativos', component: GestionPersonal, canActivate: [rolGuard], data: { roles: [1] }},
       {path: 'configuracion', component: ConfiguracionGlobalComponent, canActivate: [rolGuard], data: { roles: [1] } },
       {path: 'director/personal', component: DirectorPersonalComponent, canActivate: [rolGuard], data: { roles: [2] } },
@@ -40,7 +46,11 @@ export const routes: Routes = [
       {path: 'catalogo/biblioteca', component: CatalogoBibliotecaComponent, canActivate: [rolGuard], data: { roles: [4,5] } },
       {path: 'notas', component: MisNotasComponent, canActivate: [rolGuard], data: { roles: [5] } },
       {path: 'perfil', component: MiPerfilComponent, canActivate: [rolGuard], data: { roles: [5] } },
-      {path: 'estado/cuentas', component: EstadoCuentaComponent, canActivate: [rolGuard], data: { roles: [5] } }
+      {path: 'estado/cuentas', component: EstadoCuentaComponent, canActivate: [rolGuard], data: { roles: [5] } },
+      {path: 'reporte/solvencia', component: ReporteSolvenciaComponent, canActivate: [rolGuard], data: { roles: [1,2,3] } },
+      {path: 'reporte/historialPagos', component: HistorialPagosComponent, canActivate: [rolGuard], data: { roles: [1,2] } },
+      {path: 'reporte/ingresos', component: ReporteIngresosComponent, canActivate: [rolGuard], data: { roles: [1] } },
+      {path: 'reporte/mora', component: ReporteMoraComponent, canActivate: [rolGuard], data: { roles: [1,2,6] } }
   ]
   }
 ];

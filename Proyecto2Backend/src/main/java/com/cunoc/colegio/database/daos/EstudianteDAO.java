@@ -79,7 +79,7 @@ public class EstudianteDAO {
         String sqlCount = "SELECT COUNT(*) FROM estudiante WHERE id_usuario IS NOT NULL";
 
         String sqlData = 
-            "SELECT u.id_usuario, u.correo, u.activo AS estado_usuario, " +
+            "SELECT u.id_usuario, u.correo, u.activo AS activo, " +
             "e.id_estudiante, e.nombres, e.apellidos, " +
             "g.nombre AS nombre_grado, n.nombre AS nombre_nivel, c.nombre AS nombre_carrera " +
             "FROM estudiante e " +
@@ -93,7 +93,10 @@ public class EstudianteDAO {
             "    ) i2 ON i1.id_inscripcion = i2.ultima_inscripcion" +
             ") i ON e.id_estudiante = i.id_estudiante " +
             
-            "LEFT JOIN grado g ON i.id_grado = g.id_grado " +
+            "LEFT JOIN seccion s ON i.id_seccion = s.id_seccion " +
+            "LEFT JOIN curriculo cu ON s.id_curriculo = cu.id_curriculo " +
+            "LEFT JOIN grado g ON cu.id_grado = g.id_grado " +
+            
             "LEFT JOIN nivel n ON g.id_nivel = n.id_nivel " +
             "LEFT JOIN carrera c ON g.id_carrera = c.id_carrera " + 
             "WHERE e.id_usuario IS NOT NULL " +
@@ -121,7 +124,7 @@ public class EstudianteDAO {
                         dto.setNombres(rsData.getString("nombres"));
                         dto.setApellidos(rsData.getString("apellidos"));
                         dto.setCorreo(rsData.getString("correo"));
-                        dto.setEstado(rsData.getBoolean("estado_usuario"));                        
+                        dto.setEstado(rsData.getBoolean("activo"));                        
                         dto.setGrado(rsData.getString("nombre_grado") != null ? rsData.getString("nombre_grado") : "Sin asignar");
                         dto.setNivel(rsData.getString("nombre_nivel") != null ? rsData.getString("nombre_nivel") : "Sin asignar");
                         dto.setCarrera(rsData.getString("nombre_carrera") != null ? rsData.getString("nombre_carrera") : "N/A");
@@ -152,9 +155,10 @@ public class EstudianteDAO {
             conexion.setAutoCommit(false); 
 
             String sqlUsuario = "INSERT INTO usuario (correo, contrasena, id_rol, activo) VALUES (?, ?, ?, true)";
-            psUsuario = conexion.prepareStatement(sqlUsuario, java.sql.Statement.RETURN_GENERATED_KEYS);
+            psUsuario = conexion.prepareStatement(sqlUsuario, java.sql.Statement.RETURN_GENERATED_KEYS);    
+            String passCodificada = java.util.Base64.getEncoder().encodeToString(password.getBytes()); //codificar         
             psUsuario.setString(1, correo);
-            psUsuario.setString(2, password);
+            psUsuario.setString(2, passCodificada); 
             psUsuario.setInt(3, idRolAlumno);
             psUsuario.executeUpdate();
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="reporteSolvencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d9e2a7b3-8c4f-4e61-9c8a-1a2b3c4d5e6f">
+    
+    <field name="idEstudiante" class="java.lang.Integer"/>
+    <field name="nombreCompleto" class="java.lang.String"/>
+    <field name="totalCargos" class="java.math.BigDecimal"/>
+    <field name="totalPagado" class="java.math.BigDecimal"/>
+    <field name="saldoPendiente" class="java.math.BigDecimal"/>
+    <field name="estado" class="java.lang.String"/>
+
+    <title>
+        <band height="50" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30" uuid="1a2b3c4d-5e6f-7a8b-9c0d-e1f2a3b4c5d6"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Alumnos Solventes y Morosos]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="30" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="40" height="30" uuid="2b3c4d5e-6f7a-8b9c-0d1e-f2a3b4c5d6e7"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="40" y="0" width="165" height="30" uuid="3c4d5e6f-7a8b-9c0d-1e2f-a3b4c5d6e7f8"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Nombre Completo]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="205" y="0" width="80" height="30" uuid="4d5e6f7a-8b9c-0d1e-2f3a-b4c5d6e7f8a9"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Cargos]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="285" y="0" width="80" height="30" uuid="5e6f7a8b-9c0d-1e2f-3a4b-c5d6e7f8a9b0"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Pagos]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="365" y="0" width="90" height="30" uuid="6f7a8b9c-0d1e-2f3a-4b5c-d6e7f8a9b0c1"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Saldo]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="455" y="0" width="100" height="30" uuid="7a8b9c0d-1e2f-3a4b-5c6d-e7f8a9b0c1d2"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Estado]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="25" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="40" height="25" uuid="8b9c0d1e-2f3a-4b5c-6d7e-f8a9b0c1d2e3"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{idEstudiante}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="40" y="0" width="165" height="25" uuid="9c0d1e2f-3a4b-5c6d-7e8f-a9b0c1d2e3f4"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{nombreCompleto}]]></textFieldExpression>
+            </textField>
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="205" y="0" width="80" height="25" uuid="0d1e2f3a-4b5c-6d7e-8f9a-b0c1d2e3f4a5"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{totalCargos}]]></textFieldExpression>
+            </textField>
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="285" y="0" width="80" height="25" uuid="1e2f3a4b-5c6d-7e8f-9a0b-c1d2e3f4a5b6"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{totalPagado}]]></textFieldExpression>
+            </textField>
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="365" y="0" width="90" height="25" uuid="2f3a4b5c-6d7e-8f9a-0b1c-d2e3f4a5b6c7"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{saldoPendiente}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="455" y="0" width="100" height="25" uuid="3a4b5c6d-7e8f-9a0b-1c2d-e3f4a5b6c7d8"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

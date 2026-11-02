@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="reporteMora" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" 
+              uuid="c3d4e5f6-7890-abcd-ef12-34567890abcd" whenNoDataType="AllSectionsNoDetail">
+
+    <field name="tituloLibro" class="java.lang.String"/>
+    <field name="estudiantePoseedor" class="java.lang.String"/>
+    <field name="fechaEsperada" class="java.lang.String"/>
+    <field name="diasRetraso" class="java.lang.Integer"/>
+    <field name="recargoFinanciero" class="java.lang.Double"/>
+
+    <title>
+        <band height="60" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30" uuid="11112222-3333-4444-5555-666677778888"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Préstamos en Mora - Biblioteca]]></text>
+            </staticText>
+            <textField pattern="dd/MM/yyyy h:mm a">
+                <reportElement x="0" y="30" width="555" height="20" forecolor="#666666" uuid="22223333-4444-5555-6666-777788889999"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isItalic="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generado el: " + new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="30" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="160" height="30" uuid="33334444-5555-6666-7777-888899990000"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Título del Libro]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="160" y="0" width="165" height="30" uuid="44445555-6666-7777-8888-999900001111"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Estudiante Poseedor]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="325" y="0" width="80" height="30" uuid="55556666-7777-8888-9999-000011112222"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Vencimiento]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="405" y="0" width="70" height="30" uuid="66667777-8888-9999-0000-111122223333"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Días Retraso]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="475" y="0" width="80" height="30" uuid="77778888-9999-0000-1111-222233334444"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Recargo]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="25" splitType="Stretch">
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="0" width="160" height="25" uuid="88889999-0000-1111-2222-333344445555"/>
+                <textElement verticalAlignment="Middle"><font size="9"/></textElement>
+                <textFieldExpression><![CDATA[$F{tituloLibro}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="160" y="0" width="165" height="25" uuid="99990000-1111-2222-3333-444455556666"/>
+                <textElement verticalAlignment="Middle"><font size="9"/></textElement>
+                <textFieldExpression><![CDATA[$F{estudiantePoseedor}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="325" y="0" width="80" height="25" uuid="00001111-2222-3333-4444-555566667777"/>
+                <textElement verticalAlignment="Middle"><font size="9"/></textElement>
+                <textFieldExpression><![CDATA[$F{fechaEsperada}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="405" y="0" width="70" height="25" forecolor="#D32F2F" uuid="1111aaaa-bbbb-cccc-dddd-eeeeffff0000"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{diasRetraso}]]></textFieldExpression>
+            </textField>
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="475" y="0" width="80" height="25" forecolor="#D32F2F" uuid="2222bbbb-cccc-dddd-eeee-ffff00001111"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{recargoFinanciero}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

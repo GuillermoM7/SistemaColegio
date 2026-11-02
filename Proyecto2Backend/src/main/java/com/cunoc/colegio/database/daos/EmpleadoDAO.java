@@ -59,9 +59,10 @@ public class EmpleadoDAO {
             conexion.setAutoCommit(false); 
 
             String sqlUsuario = "INSERT INTO usuario (correo, contrasena, id_rol) VALUES (?, ?, ?)";
-            psUsuario = conexion.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS);
+            psUsuario = conexion.prepareStatement(sqlUsuario, java.sql.Statement.RETURN_GENERATED_KEYS);            
+            String passCodificada = java.util.Base64.getEncoder().encodeToString(dto.getPassword().getBytes());//codificar        
             psUsuario.setString(1, dto.getCorreo());       
-            psUsuario.setString(2, dto.getPassword());           
+            psUsuario.setString(2, passCodificada);        
             psUsuario.setInt(3, dto.getIdRol());    
             psUsuario.executeUpdate();
 

@@ -1,0 +1,62 @@
+<div class="container mt-4">
+    <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Reporte de Alumnos Solventes y Morosos</h3>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+        <!-- Nivel -->
+        <div class="col-md-3">
+            <label class="form-label fw-bold">Nivel</label>
+            <select class="form-select" [(ngModel)]="nivelId" (change)="alCambiarNivel()">
+            <option value="0">Seleccione un Nivel</option>
+            <option *ngFor="let nivel of niveles" [value]="nivel.idNivel">
+                {{ nivel.nombre }}
+            </option>
+            </select>
+        </div>
+
+        <!-- Carrera (Sólo Diversificado) -->
+        <div class="col-md-3" *ngIf="esDiversificado">
+            <label class="form-label fw-bold">Carrera</label>
+            <select class="form-select" [(ngModel)]="carreraId" (change)="buscarGrados()">
+            <option value="0">Seleccione una Carrera</option>
+            <option *ngFor="let carrera of carreras" [value]="carrera.idCarrera">
+                {{ carrera.nombre }}
+            </option>
+            </select>
+        </div>
+
+        <!-- Grado -->
+        <div class="col-md-3">
+            <label class="form-label fw-bold">Grado</label>
+            <select class="form-select" [(ngModel)]="gradoId" (change)="alCambiarGrado()" [disabled]="!nivelId || (esDiversificado && !carreraId)">
+            <option value="0">Seleccione un Grado</option>
+            <option *ngFor="let grado of grados" [value]="grado.idGrado">
+                {{ grado.nombreGrado }}
+            </option>
+            </select>
+        </div>
+
+        <!-- Sección -->
+        <div class="col-md-3">
+            <label class="form-label fw-bold">Sección</label>
+            <select class="form-select" [(ngModel)]="seccionId" [disabled]="!gradoId">
+                <option value="0">Seleccione una Sección</option>
+                <option *ngFor="let seccion of secciones" [value]="seccion.idSeccion">
+                {{ seccion.nombre }}
+                </option>
+            </select>
+            </div>
+        </div>
+
+        <!-- Botón de Generación -->
+        <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-success px-4 py-2" (click)="generarPDF()" [disabled]="!formularioValido || cargandoPDF">
+            <span *ngIf="cargandoPDF" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ cargandoPDF ? 'Generando PDF...' : 'Generar Reporte PDF' }}
+            </button>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-danger text-white">
+      <h3 class="mb-0">
+        <i class="bi bi-book me-2"></i>Reporte de Préstamos en Mora
+      </h3>
+    </div>
+    <div class="card-body p-4 text-center">
+      
+      <p class="lead mb-4">
+        Este reporte genera un listado en tiempo real de todos los estudiantes que tienen libros vencidos en la biblioteca, calculando los días de retraso y el recargo financiero actual.
+      </p>
+
+      <button class="btn btn-danger btn-lg px-5 py-3" (click)="generarPDF()" [disabled]="cargandoPDF">
+        <span *ngIf="cargandoPDF" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <i class="bi bi-file-earmark-pdf-fill me-2" *ngIf="!cargandoPDF"></i>
+        {{ cargandoPDF ? 'Generando PDF...' : 'Generar Reporte de Morosos' }}
+      </button>
+
+    </div>
+  </div>
+</div>

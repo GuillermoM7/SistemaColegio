@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/Proyecto2Backend/api/v1/auth/login';
+  private apiUrl = 'http://localhost:8080/Proyecto2Backend/api/v1/auth';
 
   constructor(private http: HttpClient) { }
 
@@ -17,6 +17,22 @@ export class AuthService {
       password: password 
     };
 
-    return this.http.post<any>(this.apiUrl, credenciales);
+    return this.http.post<any>(`${this.apiUrl}/login`, credenciales);
   }
+
+
+  recuperarPassword(correo: string) {
+    return this.http.post(`${this.apiUrl}/recuperar`, { correo });
+  }
+
+
+  verificarCorreo(correo: string) {
+    return this.http.post(`${this.apiUrl}/verificar-correo`, { correo });
+  }
+
+
+  actualizarPassword(correo: string, nuevaPassword: string) {
+    return this.http.put(`${this.apiUrl}/actualizar-password`, { correo, nuevaPassword });
+  }
+
 }

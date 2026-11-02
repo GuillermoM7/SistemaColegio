@@ -1,6 +1,7 @@
 package com.cunoc.colegio.database.daos;
 
 import com.cunoc.colegio.apirestapp.dto.CargoDTO;
+import com.cunoc.colegio.apirestapp.dto.CargoPendienteDTO;
 import com.cunoc.colegio.apirestapp.dto.PagoDTO;
 import com.cunoc.colegio.apirestapp.dto.RegistrarPagoDTO;
 import com.cunoc.colegio.database.DBConnectionSingleton;
@@ -12,7 +13,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -189,4 +189,134 @@ public class SecretariaCobroDAO {
             return null;
         }
     }
+    
+    
+    public boolean procesarPagoExtracurricular(int idEstudiante, int idSecretaria, String descripcionExtra, double monto) {
+        Connection conn = null;
+        PreparedStatement psCargo = null;
+        PreparedStatement psPago = null;
+        ResultSet rsCargo = null;
+        boolean exito = false;
+
+        String sqlCargo = "INSERT INTO cargo (id_estudiante, concepto, monto_cobrado, fecha_generacion, mes_referencia, estado_pago) " +
+                          "VALUES (?, 'Actividad', ?, CURRENT_TIMESTAMP, NULL, 'Pagado')";
+        
+        String sqlPago = "INSERT INTO pago (id_cargo, id_estudiante, id_secretaria, monto, fecha_pago, concepto, descripcion) " +
+                         "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, 'Actividad', ?)";
+
+        try {
+            conn = DBConnectionSingleton.getInstance().getConnection();
+            conn.setAutoCommit(false); 
+
+            psCargo = conn.prepareStatement(sqlCargo, java.sql.Statement.RETURN_GENERATED_KEYS);
+            psCargo.setInt(1, idEstudiante); 
+            psCargo.setDouble(2, monto);     
+            psCargo.executeUpdate();
+
+            int idCargoNuevo = 0;
+            rsCargo = psCargo.getGeneratedKeys();
+            if (rsCargo.next()) {
+                idCargoNuevo = rsCargo.getInt(1);
+            } else {
+                throw new java.sql.SQLException("No se pudo obtener el ID del cargo generado.");
+            }
+
+            psPago = conn.prepareStatement(sqlPago);
+            psPago.setInt(1, idCargoNuevo);
+            psPago.setInt(2, idEstudiante);
+            psPago.setInt(3, idSecretaria); 
+            psPago.setDouble(4, monto);
+            psPago.setString(5, "Pago: " + descripcionExtra);
+            psPago.executeUpdate();
+
+            conn.commit();
+            exito = true;
+
+        } catch (java.sql.SQLException e) {
+            if (conn != null) {
+                try { conn.rollback(); } catch (java.sql.SQLException ex) { ex.printStackTrace(); } 
+            }
+            e.printStackTrace();
+        } finally {
+            try { if (rsCargo != null) rsCargo.close(); } catch (Exception e) {}
+            try { if (psCargo != null) psCargo.close(); } catch (Exception e) {}
+            try { if (psPago != null) psPago.close(); } catch (Exception e) {}
+            try { if (conn != null) { conn.setAutoCommit(true); conn.close(); } } catch (Exception e) {}
+        }
+        return exito;
+    }
+    
+    
+    public boolean procesarPagoMulta(int idEstudiante, int idMulta, int idSecretaria, double monto, String concepto) {
+        Connection conn = null;
+        PreparedStatement psPago = null;
+        PreparedStatement psUpdateMulta = null;
+        boolean exito = false;
+
+        String sqlPago = "INSERT INTO pago (id_multa, id_estudiante, id_secretaria, monto, fecha_pago, concepto, descripcion) " +
+                         "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, 'Multa', ?)";
+
+        String sqlUpdateMulta = "UPDATE multa SET estado = 'PAGADA' WHERE id_multa = ?";
+
+        try {
+            conn = DBConnectionSingleton.getInstance().getConnection();
+            conn.setAutoCommit(false); 
+
+            psPago = conn.prepareStatement(sqlPago);
+            psPago.setInt(1, idMulta);
+            psPago.setInt(2, idEstudiante);
+            psPago.setInt(3, idSecretaria);
+            psPago.setDouble(4, monto);
+            psPago.setString(5, concepto);
+            psPago.executeUpdate();
+
+            psUpdateMulta = conn.prepareStatement(sqlUpdateMulta);
+            psUpdateMulta.setInt(1, idMulta);
+            psUpdateMulta.executeUpdate();
+
+            conn.commit();
+            exito = true;
+
+        } catch (java.sql.SQLException e) {
+            if (conn != null) {
+                try { conn.rollback(); } catch (java.sql.SQLException ex) { ex.printStackTrace(); }
+            }
+            e.printStackTrace();
+        } finally {
+            try { if (psPago != null) psPago.close(); } catch (Exception e) {}
+            try { if (psUpdateMulta != null) psUpdateMulta.close(); } catch (Exception e) {}
+            try { if (conn != null) { conn.setAutoCommit(true); conn.close(); } } catch (Exception e) {}
+        }
+        return exito;
+    }
+    
+    
+    public List<CargoPendienteDTO> obtenerMultasPendientes(int idEstudiante) {
+        List<CargoPendienteDTO> lista = new ArrayList<>();
+        String sql = "SELECT m.id_multa, l.titulo AS concepto, m.monto " +
+                     "FROM multa m " +
+                     "JOIN prestamo p ON m.id_prestamo = p.id_prestamo " +
+                     "JOIN estudiante e ON p.id_usuario = e.id_usuario " +
+                     "JOIN libro l ON p.id_libro = l.id_libro " +
+                     "WHERE e.id_estudiante = ? AND m.estado = 'PENDIENTE'";
+
+        try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, idEstudiante);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    CargoPendienteDTO multa = new CargoPendienteDTO();
+                    multa.setIdCargo(rs.getInt("id_multa")); 
+                    multa.setConcepto("Multa - Libro: " + rs.getString("concepto"));
+                    multa.setMontoCobrado(rs.getDouble("monto"));
+                    lista.add(multa);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    
 }

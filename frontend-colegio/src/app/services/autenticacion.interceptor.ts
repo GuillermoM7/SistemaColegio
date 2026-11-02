@@ -1,6 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const autenticacionInterceptor: HttpInterceptorFn = (req, next) => {
+    if (req.url.includes('/auth/')) {
+        return next(req);
+    }
+
     const usuarioGuardado = localStorage.getItem('usuarioLogueado');
     let token = '';
 
@@ -9,11 +13,11 @@ export const autenticacionInterceptor: HttpInterceptorFn = (req, next) => {
         token = datos.token; 
     }
 
-    if (token && !req.url.includes('/login')) {
+    if (token) {
         const peticionClonada = req.clone({
-        setHeaders: {
-            Authorization: 'Bearer ' + token
-        }
+            setHeaders: {
+                Authorization: 'Bearer ' + token
+            }
         });
         return next(peticionClonada);
     }

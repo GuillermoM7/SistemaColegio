@@ -82,6 +82,12 @@
                             <i class="fas fa-edit d-block mb-1 fs-4"></i> Actualizar Info
                         </button>
                     </div>
+
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-warning text-dark w-100 fw-bold shadow-sm py-2" (click)="abrirPagosVarios()">
+                            <i class="fas fa-cash-register d-block mb-1 fs-4"></i> Pagos Extras
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,5 +120,13 @@
         (onVolver)="volverAlDashboard()">
     </app-expediente-alumno>
 
+    <!-- V5-->
+    <app-panel-pagos-varios
+        *ngIf="vistaActual === 5"
+        [estudiante]="estudianteEnFoco"
+        [idSecretaria]="idUsuarioLogueado"
+        (onVolver)="volverAlDashboard()">
+    </app-panel-pagos-varios>
+    
 </div>
 

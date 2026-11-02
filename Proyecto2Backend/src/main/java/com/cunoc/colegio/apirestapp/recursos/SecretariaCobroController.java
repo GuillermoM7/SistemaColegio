@@ -1,16 +1,21 @@
 package com.cunoc.colegio.apirestapp.recursos;
 
+import com.cunoc.colegio.apirestapp.dto.CargoPendienteDTO;
+import com.cunoc.colegio.apirestapp.dto.PagoExtraRequestDTO;
+import com.cunoc.colegio.apirestapp.dto.PagoMultaRequestDTO;
 import com.cunoc.colegio.apirestapp.dto.RegistrarPagoDTO;
 import com.cunoc.colegio.database.daos.SecretariaCobroDAO;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/secretaria/cobros")
 public class SecretariaCobroController {
 
     private SecretariaCobroDAO dao = new SecretariaCobroDAO();
 
+    
     @GET
     @Path("/estudiantes/{idEstudiante}/pendientes")
     @Produces(MediaType.APPLICATION_JSON)
@@ -18,6 +23,7 @@ public class SecretariaCobroController {
         return Response.ok(dao.listarCargosPendientes(idEstudiante)).build();
     }
 
+    
     @POST
     @Path("/pagar")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -33,6 +39,7 @@ public class SecretariaCobroController {
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
+    
     
     @GET
     @Path("/estudiantes/{idEstudiante}/historial")
@@ -68,4 +75,62 @@ public class SecretariaCobroController {
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("No se pudo generar la solvencia. Verifique que no existan deudas.").build();
     }
+    
+    
+    @GET
+    @Path("/multas-pendientes/{idEstudiante}")
+    @Produces("application/json")
+    public Response obtenerMultasPendientes(@PathParam("idEstudiante") int idEstudiante) {
+        SecretariaCobroDAO dao = new SecretariaCobroDAO();
+        List<CargoPendienteDTO> multas = dao.obtenerMultasPendientes(idEstudiante);
+        return Response.ok(multas).build();
+    }
+
+    
+    @POST
+    @Path("/pagar-extra")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response pagarExtracurricular(PagoExtraRequestDTO request) {
+        SecretariaCobroDAO dao = new SecretariaCobroDAO();
+        boolean exito = dao.procesarPagoExtracurricular(
+                request.getIdEstudiante(), 
+                request.getIdSecretaria(), 
+                request.getDescripcion(), 
+                request.getMonto()
+        );
+
+        if (exito) {
+            return Response.ok("{\"mensaje\": \"Pago extracurricular registrado con éxito.\"}").build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("{\"mensaje\": \"Error al procesar el pago extracurricular.\"}")
+                    .build();
+        }
+    }
+
+    
+    @POST
+    @Path("/pagar-multa")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response pagarMultaBiblioteca(PagoMultaRequestDTO request) {
+        SecretariaCobroDAO dao = new SecretariaCobroDAO();
+        boolean exito = dao.procesarPagoMulta(
+                request.getIdEstudiante(), 
+                request.getIdMulta(), 
+                request.getIdSecretaria(), 
+                request.getMonto(), 
+                request.getConcepto()
+        );
+
+        if (exito) {
+            return Response.ok("{\"mensaje\": \"Multa cobrada y registrada con éxito.\"}").build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("{\"mensaje\": \"Error al procesar el pago de la multa.\"}")
+                    .build();
+        }
+    }
+    
 }
